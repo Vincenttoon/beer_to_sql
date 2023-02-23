@@ -1,7 +1,7 @@
-INSERT INTO breweries (name)
+INSERT INTO breweries (name, city, state)
 VALUES 
     -- 1
-    ('4 Hands');
+    ('4 Hands', 'St. Louis', 'MO');
 
 INSERT INTO ratings (value)
 VALUES

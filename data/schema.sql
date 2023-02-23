@@ -11,7 +11,9 @@ DROP TABLE IF EXISTS styles;
 
 CREATE TABLE breweries (
   brewery_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL,
+  city VARCHAR(255),
+  state VARCHAR(50)
 );
 
 CREATE TABLE ratings (
