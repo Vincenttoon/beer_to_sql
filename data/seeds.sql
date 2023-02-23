@@ -54,7 +54,135 @@ VALUES
 
 INSERT INTO styles (name)
 VALUES
-    ('Imperial IPA')
+    -- 1-15 ++(IPA)++ vv
+    ('Imperial IPA'),
+    ('American IPA'),
+    ('New England IPA'),
+    ('IPA'),
+    ('Double IPA'),
+    ('Triple IPA'),
+    ('Rye IPA'),
+    -- 8 vv
+    ('Belgian IPA'),
+    ('Belgian Double IPA'),
+    ('Double New England IPA'),
+    ('Triple New England IPA')
+    ('West Coast IPA'),
+    ('Double West Coast IPA'),
+    ('English Brown Ale'),
+    ('Black IPA'),
+
+    -- 16-20 ++(Pale Ale)++ vv
+    ('Pale Ale'),
+    ('Double Pale Ale'),
+    ('Hoppy Pale'),
+    ('English Pale'),
+    ('Triple Pale')
+
+    -- 21-29  ++(Pilsner, Blondes)++ vv
+    ('Pilsner'),
+    ('German Pilsner'),
+    ('Czech Pilsner'),
+    ('Hoppy Pilsner'),
+    ('Hazy Pilsner'),
+    ('Blonde Ale'),
+    ('Hoppy Blonde'),
+    ('Belgian Blonde'),
+    ('White Ale')
+
+    -- 30-37 ++(Lager)++ vv
+    ('Lager'),
+    ('Mexican Lager'),
+    ('Black Lager'),
+    ('Munich Lager'),
+    ('Dark Lager'),
+    ('Pale Lager'),
+
+    -- 38-48 ++(Amber, Red, Brown, Porter)++
+    ('Porter')
+    ('Imperial Porter'),
+    ('Brown Ale'),
+    ('Coffee Brown'),
+    ('Amber Ale'),
+    ('Red Ale'),
+    ('English Red Ale'),
+    ('English Style Bitter'),
+    ('Winter Ale'),
+    ('Old Ale'),
+    ('Irish Red'),
+
+    -- 49-64 ++(Stouts)++ vv
+    ('Irish Stout'),
+    ('Dry Stout'),
+    ('Sweet Stout'),
+    ('Double Stout'),
+    ('Triple Stout'),
+    ('American Stout'),
+    ('Milk Stout'),
+    ('White Stout'),
+    ('Chocolate Stout'),
+    ('Coffee Stout'),
+    ('English Stout'),
+    ('Espresso Stout'),
+    ('Pastry Stout'),
+    ('Double Pastry Stout'),
+    ('Imperial Pastry Stout'),
+
+    -- 65-70 ++(Barrel Aged)++ vv
+    ('Barrel Aged Brown'),
+    ('Barrel Aged Porter'),
+    ('Barrel Aged Ale'),
+    ('Barrel Aged Stout'),
+    ('Barrel Aged Russian Imperial Stout'),
+    ('Barrel Aged Baltic Porter'),
+
+    -- 71-93 ++(Wheats, Belgians, Import Skews)++ vv
+    ('Belgian Ale'),
+    ('Farmhouse Ale'),
+    ('Saison'),
+    -- 74 vv
+    ('American Saison'),
+    ('Belgian Dubbel'),
+    ('Belgian Trippel'),
+    ('Belgian Quad'),
+    ('Trappist Ale'),
+    ('Belgian Strong Golden Ale'),
+    ('Belgian Strong Dark Ale'),
+    ('Belgian Strong Ale'),
+    ('Hefeweizen'),
+    ('Dopplebock'),
+    -- 84 vv
+    ('Schwarzbier'),
+    ('Dunkel'),
+    ('Zwickelbier'),
+    ('Weizendopplebock'),
+    ('Kolsch'),
+    ('Munich Dunkel'),
+    ('Witbier'),
+    ('Weissbier'),
+    ('Scotch Ale'),
+    ('Fruited Wheat')
+
+    -- 94-99 ++(Sours)++ vv
+    ('Fruited Sour'),
+    ('Sour Ale'),
+    ('Wild Ale'),
+    ('Foeder Aged Sour'),
+    ('Belgian Sour')
+    ('Flanders Red')
+
+    --100-105 ++(Sweet Stuff)++ vv
+    ('Dry Cider'),
+    ('Cider'),
+    ('Radler'),
+    ('Sweet Cider'),
+    ('Hard Seltzer'),
+    ('Framboise'),
+
+    -- 106 ++(Other)++ vv
+    ('Gluten Free'),
+    ('Non-Alcoholic')
+    ('Ale'),
 
 INSERT INTO beers (name, brewery_id, style_id, abv, rating_id, date_drunk, location_id, notes)
 VALUES
