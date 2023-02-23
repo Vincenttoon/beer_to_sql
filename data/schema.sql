@@ -9,29 +9,29 @@ DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS ratings;
 
 CREATE TABLE breweries (
-  id INT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
+  brewery_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE ratings (
-  id INT PRIMARY KEY,
+  rating_id INT PRIMARY KEY,
   value INT NOT NULL
 );
 
 CREATE TABLE locations (
-    id INT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    location_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
     city VARCHAR(255),
     state VARCHAR(50)
 );
 
 CREATE TABLE styles (
-    id INT PRIMARY KEY,
+    style_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     name VARCHAR(255)
 );
 
 CREATE TABLE beers (
-  id INT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
   brewery_id INT NOT NULL,
   style_id INT NOT NULL,
@@ -40,8 +40,8 @@ CREATE TABLE beers (
   date_drunk DATE NOT NULL,
   location_id INT,
   notes TEXT,
-  FOREIGN KEY (brewery_id) REFERENCES breweries(id),
-  FOREIGN KEY (style_id) REFERENCES styles(id),
-  FOREIGN KEY (rating_id) REFERENCES ratings(id),
-  FOREIGN KEY (location_id) REFERENCES locations(id)
+  FOREIGN KEY (brewery_id) REFERENCES breweries(brewery_id),
+  FOREIGN KEY (style_id) REFERENCES styles(style_id),
+  FOREIGN KEY (rating_id) REFERENCES ratings(rating_id),
+  FOREIGN KEY (location_id) REFERENCES locations(location_id)
 );
