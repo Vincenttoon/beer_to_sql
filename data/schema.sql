@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS beers;
 DROP TABLE IF EXISTS breweries;
 DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS ratings;
+DROP TABLE IF EXISTS styles;
 
 CREATE TABLE breweries (
   brewery_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -14,8 +15,8 @@ CREATE TABLE breweries (
 );
 
 CREATE TABLE ratings (
-  rating_id INT PRIMARY KEY,
-  value INT NOT NULL
+  rating_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  value DECIMAL(3,2) NOT NULL
 );
 
 CREATE TABLE locations (
