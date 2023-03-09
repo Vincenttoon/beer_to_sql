@@ -4,10 +4,7 @@ CREATE DATABASE vinny_beers_db;
 USE vinny_beers_db;
 
 DROP TABLE IF EXISTS beers;
-DROP TABLE IF EXISTS breweries;
-DROP TABLE IF EXISTS locations;
-DROP TABLE IF EXISTS ratings;
-DROP TABLE IF EXISTS styles;
+
 
 CREATE TABLE breweries (
   brewery_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
