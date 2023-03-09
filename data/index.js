@@ -23,6 +23,13 @@ class DB {
     return this.connection.promise().query("SELECT * FROM breweries");
   }
 
+  getBreweryNames() {
+    return this.connection
+      .promise()
+      .query("SELECT name FROM breweries")
+      .then(([rows]) => rows.map((row) => row.name));
+  }
+
   seeAllLocations() {
     return this.connection.promise().query("SELECT * FROM locations");
   }
