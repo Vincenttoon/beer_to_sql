@@ -46,6 +46,12 @@ VALUES
     -- 20 vv
     (5.00);
 
+INSERT INTO locations (location_name, location_city, location_state)
+VALUES
+    -- 1
+    ('GBE', 'Edwardsville', 'IL'),
+    ("GBO", "O'fallon", 'IL');
+
 INSERT INTO styles (style_name)
 VALUES
     -- 1-15 ++(IPA)++ vv
@@ -56,6 +62,7 @@ VALUES
     ('Double IPA'),
     ('Triple IPA'),
     ('Rye IPA'),
+    ('Session IPA'),
     -- 8 vv
     ('Belgian IPA'),
     ('Belgian Double IPA'),
@@ -171,7 +178,7 @@ VALUES
     ('Radler'),
     ('Sweet Cider'),
     ('Hard Seltzer'),
-    ('Lambic'),
+    ('Framboise'),
 
     -- 106 ++(Other)++ vv
     ('Gluten Free'),
@@ -181,6 +188,3 @@ VALUES
 -- INSERT INTO beers (name, brewery_name, style_id, abv, rating_id, date_drunk, location_id, notes)
 -- VALUES
 --     ('Warhammer', "4 Hands", 1, 9.0, 18, '2023-02-22', 1, "Happy it's back. Love this beer." );
-
-
-

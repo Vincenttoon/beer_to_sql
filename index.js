@@ -25,6 +25,7 @@ const mainMenu = () => {
           "View beers by style",
           "Update beer rating",
           "Add other",
+          "View other",
           "Delete beer",
           "Quit",
         ],
@@ -90,6 +91,11 @@ const addBeer = () => {
       },
       {
         type: "input",
+        name: "location_name",
+        message: "Enter the location name:",
+      },
+      {
+        type: "input",
         name: "notes",
         message: "Enter notes:",
       },
@@ -102,44 +108,40 @@ const addBeer = () => {
         abv,
         rating_id,
         date_drunk,
+        location_name,
         notes,
       } = answers;
 
-      db.getBreweryByName(brewery_name, mainMenu)
+      return db
+        .getBreweryByName(brewery_name)
         .then((brewery) => {
           if (brewery) {
             // Brewery exists, add the beer with the existing brewery_id
-            db.addBeer(
+            return db.addBeer(
               name,
               brewery_name,
               style_name,
               abv,
               rating_id,
               date_drunk,
+              location_name,
               notes
-            )
-              .then(() => {
-                console.log("Beer added to database.");
-                mainMenu();
-              })
-              .catch((error) => {
-                console.error("Error adding beer:", error);
-              });
+            );
           } else {
             // Brewery doesn't exist, prompt user to create a new entry
-            inquirer
+            return inquirer
               .prompt([
                 {
                   type: "confirm",
                   name: "addBrewery",
                   message:
-                    "Brewery not found. Do you want to add a new brewery?",
+                    "Brewery not found. Do you want to add a new brewery? (Y/n)",
                 },
               ])
               .then((answer) => {
                 if (answer.addBrewery) {
                   // Prompt user for brewery details and add to database
-                  inquirer
+                  return inquirer
                     .prompt([
                       {
                         type: "input",
@@ -154,21 +156,28 @@ const addBeer = () => {
                     ])
                     .then((breweryAnswers) => {
                       const { brewery_city, brewery_state } = breweryAnswers;
-                      db.addBrewery(brewery_name, brewery_city, brewery_state)
+                      return db
+                        .addBrewery(brewery_name, brewery_city, brewery_state)
                         .then(() => {
-                          console.log("Brewery added to database.");
+                          console.log("New brewery added to the database.");
+                          console.log("Brewery Name:", brewery_name);
+                          console.log("Brewery City:", brewery_city);
+                          console.log("Brewery State:", brewery_state);
                           // Now add the beer with the newly created brewery_id
-                          db.addBeer(
-                            name,
-                            brewery_name,
-                            style_name,
-                            abv,
-                            rating_id,
-                            date_drunk,
-                            notes
-                          )
+                          return db
+                            .addBeer(
+                              name,
+                              brewery_name,
+                              style_name,
+                              abv,
+                              rating_id,
+                              date_drunk,
+                              location_name,
+                              notes
+                            )
                             .then(() => {
                               console.log("Beer added to database.");
+                              mainMenu();
                             })
                             .catch((error) => {
                               console.error("Error adding beer:", error);
@@ -179,8 +188,27 @@ const addBeer = () => {
                         });
                     });
                 } else {
-                  console.log("Please enter a valid brewery name.");
-                  mainMenu();
+                  // Brewery not added, continue without adding a new beer
+                  console.log("Brewery not added.");
+                  // Add the beer with the provided brewery_name
+                  return db
+                    .addBeer(
+                      name,
+                      brewery_name,
+                      style_name,
+                      abv,
+                      rating_id,
+                      date_drunk,
+                      location_name,
+                      notes
+                    )
+                    .then(() => {
+                      console.log("Beer added to database.");
+                      mainMenu();
+                    })
+                    .catch((error) => {
+                      console.error("Error adding beer:", error);
+                    });
                 }
               });
           }
