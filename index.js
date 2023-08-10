@@ -25,7 +25,6 @@ const mainMenu = () => {
           "View beers by style",
           "Update beer rating",
           "Add other",
-          "View other",
           "Delete beer",
           "Quit",
         ],
@@ -91,11 +90,6 @@ const addBeer = () => {
       },
       {
         type: "input",
-        name: "location_name",
-        message: "Enter the location name:",
-      },
-      {
-        type: "input",
         name: "notes",
         message: "Enter notes:",
       },
@@ -108,11 +102,10 @@ const addBeer = () => {
         abv,
         rating_id,
         date_drunk,
-        location_name,
         notes,
       } = answers;
 
-      db.getBreweryByName(brewery_name)
+      db.getBreweryByName(brewery_name, mainMenu)
         .then((brewery) => {
           if (brewery) {
             // Brewery exists, add the beer with the existing brewery_id
@@ -123,7 +116,6 @@ const addBeer = () => {
               abv,
               rating_id,
               date_drunk,
-              location_name,
               notes
             )
               .then(() => {
@@ -173,7 +165,6 @@ const addBeer = () => {
                             abv,
                             rating_id,
                             date_drunk,
-                            location_name,
                             notes
                           )
                             .then(() => {

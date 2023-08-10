@@ -46,12 +46,6 @@ VALUES
     -- 20 vv
     (5.00);
 
-INSERT INTO locations (location_name, location_city, location_state)
-VALUES
-    -- 1
-    ('GBE', 'Edwardsville', 'IL'),
-    ("GBO", "O'fallon", 'IL');
-
 INSERT INTO styles (style_name)
 VALUES
     -- 1-15 ++(IPA)++ vv
@@ -177,7 +171,7 @@ VALUES
     ('Radler'),
     ('Sweet Cider'),
     ('Hard Seltzer'),
-    ('Framboise'),
+    ('Lambic'),
 
     -- 106 ++(Other)++ vv
     ('Gluten Free'),
