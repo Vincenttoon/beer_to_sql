@@ -37,7 +37,7 @@ const mainMenu = () => {
           viewAllBeers();
           break;
         case "Add new beer":
-          addNewBeer();
+          addBeer();
           break;
         case "Quit":
           quit();
@@ -56,7 +56,7 @@ const viewAllBeers = () => {
     .then(() => mainMenu());
 };
 
-const addNewBeer = () => {
+const addBeer = () => {
   inquirer
     .prompt([
       {
@@ -112,21 +112,88 @@ const addNewBeer = () => {
         notes,
       } = answers;
 
-      db.addBeer(
-        name,
-        brewery_name,
-        style_name,
-        abv,
-        rating_id,
-        date_drunk,
-        location_name,
-        notes
-      )
-        .then(() => {
-          console.log("Beer added to database.");
+      db.getBreweryByName(brewery_name)
+        .then((brewery) => {
+          if (brewery) {
+            // Brewery exists, add the beer with the existing brewery_id
+            db.addBeer(
+              name,
+              brewery_name,
+              style_name,
+              abv,
+              rating_id,
+              date_drunk,
+              location_name,
+              notes
+            )
+              .then(() => {
+                console.log("Beer added to database.");
+              })
+              .catch((error) => {
+                console.error("Error adding beer:", error);
+              });
+          } else {
+            // Brewery doesn't exist, prompt user to create a new entry
+            inquirer
+              .prompt([
+                {
+                  type: "confirm",
+                  name: "addBrewery",
+                  message:
+                    "Brewery not found. Do you want to add a new brewery?",
+                },
+              ])
+              .then((answer) => {
+                if (answer.addBrewery) {
+                  // Prompt user for brewery details and add to database
+                  inquirer
+                    .prompt([
+                      {
+                        type: "input",
+                        name: "brewer_city",
+                        message: "Enter the city of the brewery:",
+                      },
+                      {
+                        type: "input",
+                        name: "brewery_state",
+                        message: "Enter the state of the brewery:",
+                      },
+                    ])
+                    .then((breweryAnswers) => {
+                      const { brewery_city, brewery_state } = breweryAnswers;
+                      db.addBrewery(brewery_name, brewery_city, brewery_state)
+                        .then(() => {
+                          console.log("Brewery added to database.");
+                          // Now add the beer with the newly created brewery_id
+                          db.addBeer(
+                            name,
+                            brewery_name,
+                            style_name,
+                            abv,
+                            rating_id,
+                            date_drunk,
+                            location_name,
+                            notes
+                          )
+                            .then(() => {
+                              console.log("Beer added to database.");
+                            })
+                            .catch((error) => {
+                              console.error("Error adding beer:", error);
+                            });
+                        })
+                        .catch((error) => {
+                          console.error("Error adding brewery:", error);
+                        });
+                    });
+                } else {
+                  console.log("Please enter a valid brewery name.");
+                }
+              });
+          }
         })
         .catch((error) => {
-          console.error("Error adding beer:", error);
+          console.error("Error checking brewery:", error);
         });
     });
 };

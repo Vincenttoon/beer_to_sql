@@ -1,4 +1,58 @@
 const connection = require("./connection");
+const inquirer = require("inquirer");
+const db = require("../data");
+
+
+// Function to prompt user for new brewery details
+async function promptForBreweryDetails(connection) {
+  try {
+    // Prompt the user if they want to add a new brewery
+    const answer = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "addBrewery",
+        message: "Brewery not found. Do you want to add a new brewery?",
+      },
+    ]);
+
+    if (answer.addBrewery) {
+      // Prompt user for new brewery details
+      const newBrewery = await inquirer.prompt([
+        {
+          type: "input",
+          name: "new_brewery_name",
+          message: "Enter the name of the new brewery:",
+        },
+        {
+          type: "input",
+          name: "new_brewery_city",
+          message: "Enter the city of the new brewery:",
+        },
+        {
+          type: "input",
+          name: "new_brewery_state",
+          message: "Enter the state of the new brewery:",
+        },
+      ]);
+
+      // Process and insert new brewery details into the database
+      // Replace the following with your actual database insertion code
+      const { new_brewery_name, new_brewery_city, new_brewery_state } = newBrewery;
+      const insertQuery = "INSERT INTO breweries (brewery_name, brewery_city, brewery_state) VALUES (?, ?, ?)";
+      const insertValues = [new_brewery_name, new_brewery_city, new_brewery_state];
+      await connection.promise().query(insertQuery, insertValues);
+      
+      console.log("New brewery added to the database.");
+      console.log("Brewery Name:", new_brewery_name);
+      console.log("Brewery City:", new_brewery_city);
+      console.log("Brewery State:", new_brewery_state);
+    } else {
+      console.log("Brewery not added.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
 
 class DB {
   constructor(connection) {
@@ -110,11 +164,10 @@ class DB {
   addBrewery(name, city, state) {
     return this.connection
       .promise()
-      .query("INSERT INTO breweries (name, city, state) VALUES (?, ?, ?)", [
-        name,
-        city,
-        state,
-      ]);
+      .query(
+        "INSERT INTO breweries (brewery_name, brewery_city, brewery_state) VALUES (?, ?, ?)",
+        [name, city, state]
+      );
   }
 
   addLocation(name, city, state) {
@@ -133,6 +186,7 @@ class DB {
       .query("INSERT INTO styles (name) VALUES (?)", [name]);
   }
 
+  // Function to add a new beer to the database
   addBeer = (
     name,
     brewery_name,
@@ -158,6 +212,24 @@ class DB {
           notes,
         ]
       );
+  };
+
+  // ... Other methods ...
+
+  getBreweryByName = (breweryName) => {
+    return this.connection
+      .promise()
+      .query("SELECT * FROM breweries WHERE brewery_name = ?", [breweryName])
+      .then(([rows]) => {
+        if (rows.length > 0) {
+          return rows[0]; // Return the first brewery matching the name
+        } else {
+          return promptForBreweryDetails(this.connection); // Call the promptForBreweryDetails function
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
   };
 
   updateBeerRating(beerId, newRating) {

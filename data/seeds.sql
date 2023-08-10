@@ -52,7 +52,7 @@ VALUES
     ('Global Brew Taphouse', 'Edwardsville', 'IL'),
     ('Global Brew Taphouse', "O'fallon", 'IL');
 
-INSERT INTO styles (name)
+INSERT INTO styles (style_name)
 VALUES
     -- 1-15 ++(IPA)++ vv
     ('Imperial IPA'),
@@ -184,9 +184,9 @@ VALUES
     ('Non-Alcoholic'),
     ('Ale');
 
-INSERT INTO beers (name, brewery_name, style_id, abv, rating_id, date_drunk, location_id, notes)
-VALUES
-    ('Warhammer', 1, 1, 9.0, 18, '2023-02-22', 1, "Happy it's back. Love this beer." );
+-- INSERT INTO beers (name, brewery_name, style_id, abv, rating_id, date_drunk, location_id, notes)
+-- VALUES
+--     ('Warhammer', "4 Hands", 1, 9.0, 18, '2023-02-22', 1, "Happy it's back. Love this beer." );
 
 
 
