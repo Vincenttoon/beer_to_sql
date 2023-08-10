@@ -117,16 +117,20 @@ const addBeer = () => {
         .then((brewery) => {
           if (brewery) {
             // Brewery exists, add the beer with the existing brewery_id
-            return db.addBeer(
-              name,
-              brewery_name,
-              style_name,
-              abv,
-              rating_id,
-              date_drunk,
-              location_name,
-              notes
-            );
+            return db
+              .addBeer(
+                name,
+                brewery_name,
+                style_name,
+                abv,
+                rating_id,
+                date_drunk,
+                location_name,
+                notes
+              )
+              .then(() => {
+                mainMenu();
+              });
           } else {
             // Brewery doesn't exist, prompt user to create a new entry
             return inquirer
@@ -164,27 +168,22 @@ const addBeer = () => {
                           console.log("Brewery City:", brewery_city);
                           console.log("Brewery State:", brewery_state);
                           // Now add the beer with the newly created brewery_id
-                          return db
-                            .addBeer(
-                              name,
-                              brewery_name,
-                              style_name,
-                              abv,
-                              rating_id,
-                              date_drunk,
-                              location_name,
-                              notes
-                            )
-                            .then(() => {
-                              console.log("Beer added to database.");
-                              mainMenu();
-                            })
-                            .catch((error) => {
-                              console.error("Error adding beer:", error);
-                            });
+                          return db.addBeer(
+                            name,
+                            brewery_name,
+                            style_name,
+                            abv,
+                            rating_id,
+                            date_drunk,
+                            location_name,
+                            notes
+                          );
+                        })
+                        .then(() => {
+                          mainMenu();
                         })
                         .catch((error) => {
-                          console.error("Error adding brewery:", error);
+                          console.error("Error:", error);
                         });
                     });
                 } else {
@@ -203,18 +202,20 @@ const addBeer = () => {
                       notes
                     )
                     .then(() => {
-                      console.log("Beer added to database.");
                       mainMenu();
                     })
                     .catch((error) => {
-                      console.error("Error adding beer:", error);
+                      console.error("Error:", error);
                     });
                 }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
               });
           }
         })
         .catch((error) => {
-          console.error("Error checking brewery:", error);
+          console.error("Error:", error);
         });
     });
 };

@@ -166,26 +166,29 @@ class DB {
     );
   }
 
-  addBrewery(name, city, state) {
-    return this.connection
-      .promise()
-      .query(
-        "INSERT INTO breweries (brewery_name, brewery_city, brewery_state) VALUES (?, ?, ?)",
-        [name, city, state]
-      )
-      .then(([result]) => {
-        if (result.affectedRows > 0) {
-          console.log("New brewery added to the database.");
-          console.log("Brewery Name:", name);
-          console.log("Brewery City:", city);
-          console.log("Brewery State:", state);
-        } else {
-          console.log("Brewery not added.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error adding brewery:", error);
-      });
+  async addBrewery(name, city, state) {
+    try {
+      const insertQuery = `
+        INSERT INTO breweries (brewery_name, brewery_city, brewery_state)
+        VALUES (?, ?, ?)
+      `;
+      const insertValues = [name, city, state];
+
+      const [result] = await this.connection
+        .promise()
+        .query(insertQuery, insertValues);
+
+      if (result.affectedRows > 0) {
+        console.log("New brewery added to the database.");
+        console.log("Brewery Name:", name);
+        console.log("Brewery City:", city);
+        console.log("Brewery State:", state);
+      } else {
+        console.log("Brewery not added.");
+      }
+    } catch (error) {
+      console.error("Error adding brewery:", error);
+    }
   }
 
   addLocation(name, city, state) {
@@ -205,7 +208,7 @@ class DB {
   }
 
   // Function to add a new beer to the database
-  addBeer = (
+  async addBeer(
     name,
     brewery_name,
     style_name,
@@ -214,12 +217,17 @@ class DB {
     date_drunk,
     location_name,
     notes
-  ) => {
-    return this.connection
-      .promise()
-      .query(
-        "INSERT INTO beers (name, brewery_name, style_name, abv, rating_id, date_drunk, location_name, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-        [
+  ) {
+    try {
+      const brewery = await this.getBreweryByName(brewery_name);
+
+      if (brewery) {
+        // Brewery exists, add the beer with the existing brewery_id
+        const insertQuery = `
+          INSERT INTO beers (name, brewery_name, style_name, abv, rating_id, date_drunk, location_name, notes)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const insertValues = [
           name,
           brewery_name,
           style_name,
@@ -228,27 +236,43 @@ class DB {
           date_drunk,
           location_name,
           notes,
-        ]
-      );
-  };
+        ];
+
+        const [result] = await this.connection
+          .promise()
+          .query(insertQuery, insertValues);
+
+        if (result.affectedRows > 0) {
+          console.log("Beer added to database.");
+        } else {
+          console.log("Error adding beer.");
+        }
+      } else {
+        console.log("Error: Brewery not found.");
+      }
+    } catch (error) {
+      console.error("Error adding beer:", error);
+    }
+  }
 
   // ... Other methods ...
 
-  getBreweryByName = (breweryName) => {
-    return this.connection
-      .promise()
-      .query("SELECT * FROM breweries WHERE brewery_name = ?", [breweryName])
-      .then(([rows]) => {
-        if (rows.length > 0) {
-          return rows[0]; // Return the first brewery matching the name
-        } else {
-          return promptForBreweryDetails(this.connection); // Call the promptForBreweryDetails function
-        }
-      })
-      .catch((error) => {
-        throw error;
-      });
-  };
+  async getBreweryByName(breweryName) {
+    try {
+      const [rows] = await this.connection
+        .promise()
+        .query("SELECT * FROM breweries WHERE brewery_name = ?", [breweryName]);
+
+      if (rows.length > 0) {
+        return rows[0]; // Return the first brewery matching the name
+      } else {
+        const newBrewery = await promptForBreweryDetails(this.connection);
+        return newBrewery;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 
   updateBeerRating(beerId, newRating) {
     return this.connection
