@@ -128,6 +128,7 @@ const addBeer = () => {
             )
               .then(() => {
                 console.log("Beer added to database.");
+                mainMenu();
               })
               .catch((error) => {
                 console.error("Error adding beer:", error);
@@ -150,7 +151,7 @@ const addBeer = () => {
                     .prompt([
                       {
                         type: "input",
-                        name: "brewer_city",
+                        name: "brewery_city",
                         message: "Enter the city of the brewery:",
                       },
                       {
@@ -188,6 +189,7 @@ const addBeer = () => {
                     });
                 } else {
                   console.log("Please enter a valid brewery name.");
+                  mainMenu();
                 }
               });
           }

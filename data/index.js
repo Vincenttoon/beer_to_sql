@@ -2,7 +2,6 @@ const connection = require("./connection");
 const inquirer = require("inquirer");
 const db = require("../data");
 
-
 // Function to prompt user for new brewery details
 async function promptForBreweryDetails(connection) {
   try {
@@ -37,17 +36,25 @@ async function promptForBreweryDetails(connection) {
 
       // Process and insert new brewery details into the database
       // Replace the following with your actual database insertion code
-      const { new_brewery_name, new_brewery_city, new_brewery_state } = newBrewery;
-      const insertQuery = "INSERT INTO breweries (brewery_name, brewery_city, brewery_state) VALUES (?, ?, ?)";
-      const insertValues = [new_brewery_name, new_brewery_city, new_brewery_state];
+      const { new_brewery_name, new_brewery_city, new_brewery_state } =
+        newBrewery;
+      const insertQuery =
+        "INSERT INTO breweries (brewery_name, brewery_city, brewery_state) VALUES (?, ?, ?)";
+      const insertValues = [
+        new_brewery_name,
+        new_brewery_city,
+        new_brewery_state,
+      ];
       await connection.promise().query(insertQuery, insertValues);
-      
+
       console.log("New brewery added to the database.");
       console.log("Brewery Name:", new_brewery_name);
       console.log("Brewery City:", new_brewery_city);
       console.log("Brewery State:", new_brewery_state);
+      mainMenu();
     } else {
       console.log("Brewery not added.");
+      mainMenu();
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -61,13 +68,13 @@ class DB {
 
   seeAllBeers() {
     return this.connection.promise().query(
-      `SELECT b.name AS beer_name, br.name AS brewery_name, s.name AS style_name, b.abv, r.value AS rating_value, DATE_FORMAT(b.date_drunk, '%a %b %d %Y') AS date_drunk, l.name AS location_name, b.notes 
+      `SELECT b.name AS beer_name, br.brewery_name, s.style_name, b.abv, r.value AS rating_value, DATE_FORMAT(b.date_drunk, '%a %b %d %Y') AS date_drunk, l.location_name, b.notes 
       FROM beers b 
       JOIN ratings r ON b.rating_id = r.rating_id 
-      JOIN breweries br ON b.brewery_id = br.brewery_id 
-      JOIN styles s ON b.style_id = s.style_id 
-      LEFT JOIN locations l ON b.location_id = l.location_id
-      ORDER BY br.name, b.name, s.name, b.abv, r.value, b.date_drunk, l.name, b.notes;      
+      JOIN breweries br ON b.brewery_name = br.brewery_name -- Use the correct alias and column name
+      JOIN styles s ON b.style_name = s.style_name -- Similarly, use the correct alias and column name
+      LEFT JOIN locations l ON b.location_name = l.location_name
+      ORDER BY br.brewery_name, b.name, s.style_name, b.abv, r.value, b.date_drunk, l.location_name, b.notes;      
       `
     );
   }

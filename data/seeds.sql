@@ -49,8 +49,8 @@ VALUES
 INSERT INTO locations (location_name, location_city, location_state)
 VALUES
     -- 1
-    ('Global Brew Taphouse', 'Edwardsville', 'IL'),
-    ('Global Brew Taphouse', "O'fallon", 'IL');
+    ('GBE', 'Edwardsville', 'IL'),
+    ("GBO", "O'fallon", 'IL');
 
 INSERT INTO styles (style_name)
 VALUES
