@@ -1,4 +1,4 @@
-INSERT INTO breweries (name, city, state)
+INSERT INTO breweries (brewery_name, brewery_city, brewery_state)
 VALUES 
     -- 1
     ('4 Hands', 'St. Louis', 'MO');
@@ -46,7 +46,7 @@ VALUES
     -- 20 vv
     (5.00);
 
-INSERT INTO locations (name, city, state)
+INSERT INTO locations (location_name, location_city, location_state)
 VALUES
     -- 1
     ('Global Brew Taphouse', 'Edwardsville', 'IL'),
@@ -184,7 +184,7 @@ VALUES
     ('Non-Alcoholic'),
     ('Ale');
 
-INSERT INTO beers (name, brewery_id, style_id, abv, rating_id, date_drunk, location_id, notes)
+INSERT INTO beers (name, brewery_name, style_id, abv, rating_id, date_drunk, location_id, notes)
 VALUES
     ('Warhammer', 1, 1, 9.0, 18, '2023-02-22', 1, "Happy it's back. Love this beer." );
 

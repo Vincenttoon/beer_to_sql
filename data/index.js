@@ -6,17 +6,16 @@ class DB {
   }
 
   seeAllBeers() {
-    return this.connection
-      .promise()
-      .query(
-        `SELECT b.id, b.name, br1.name, s.name, b.abv, r.value, b.date_drunk, l.name, b.notes 
-        FROM beers b 
-        JOIN ratings r ON b.rating_id = r.rating_id 
-        JOIN breweries br1 ON b.brewery_id = br1.brewery_id 
-        JOIN styles s ON b.style_id = s.style_id 
-        JOIN locations l ON b.location_id = l.location_id 
-        JOIN breweries br2 ON b.brewery_id = br2.brewery_id;`
-      );
+    return this.connection.promise().query(
+      `SELECT b.name AS beer_name, br.name AS brewery_name, s.name AS style_name, b.abv, r.value AS rating_value, DATE_FORMAT(b.date_drunk, '%a %b %d %Y') AS date_drunk, l.name AS location_name, b.notes 
+      FROM beers b 
+      JOIN ratings r ON b.rating_id = r.rating_id 
+      JOIN breweries br ON b.brewery_id = br.brewery_id 
+      JOIN styles s ON b.style_id = s.style_id 
+      LEFT JOIN locations l ON b.location_id = l.location_id
+      ORDER BY br.name, b.name, s.name, b.abv, r.value, b.date_drunk, l.name, b.notes;      
+      `
+    );
   }
 
   seeAllBreweries() {
@@ -96,18 +95,16 @@ class DB {
   }
 
   seeBeersBySingleRating(rating) {
-    return this.connection
-      .promise()
-      .query(
-        `SELECT beers.id, beers.name, b1.name, styles.name, beers.abv, ratings.value, beers.date_drunk, locations.name, beers.notes 
+    return this.connection.promise().query(
+      `SELECT beers.id, beers.name, b1.name, styles.name, beers.abv, ratings.value, beers.date_drunk, locations.name, beers.notes 
         FROM beers 
         JOIN ratings ON beers.rating_id = ratings.rating_id 
         JOIN breweries b1 ON beers.brewery_id = b1.brewery_id 
         JOIN styles ON beers.style_id = styles.style_id 
         LEFT JOIN locations ON beers.location_id = locations.location_id 
         WHERE ratings.value = ?;`,
-        [rating]
-      );
+      [rating]
+    );
   }
 
   addBrewery(name, city, state) {
@@ -136,32 +133,32 @@ class DB {
       .query("INSERT INTO styles (name) VALUES (?)", [name]);
   }
 
-  addBeer(
+  addBeer = (
     name,
-    brewery_id,
-    style_id,
+    brewery_name,
+    style_name,
     abv,
     rating_id,
     date_drunk,
-    location_id,
+    location_name,
     notes
-  ) {
+  ) => {
     return this.connection
       .promise()
       .query(
-        "INSERT INTO beers (name, brewery_id, style_id, abv, rating_id, date_drunk, location_id, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO beers (name, brewery_name, style_name, abv, rating_id, date_drunk, location_name, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
           name,
-          brewery_id,
-          style_id,
+          brewery_name,
+          style_name,
           abv,
           rating_id,
           date_drunk,
-          location_id,
+          location_name,
           notes,
         ]
       );
-  }
+  };
 
   updateBeerRating(beerId, newRating) {
     return this.connection

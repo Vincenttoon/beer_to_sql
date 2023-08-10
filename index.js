@@ -1,10 +1,10 @@
 const connection = require("./data/connection");
 const inquirer = require("inquirer");
-const { AutocompletePrompt } = import("inquirer-autocomplete-prompt")
+const { AutocompletePrompt } = import("inquirer-autocomplete-prompt");
 const db = require("./data");
 require("console.table");
 
-inquirer.registerPrompt('autocomplete', AutocompletePrompt);
+inquirer.registerPrompt("autocomplete", AutocompletePrompt);
 
 const init = () => {
   mainMenu();
@@ -57,79 +57,79 @@ const viewAllBeers = () => {
 };
 
 const addNewBeer = () => {
-  db.getBreweryNames()
-    .then((breweryNames) => {
-      inquirer
-        .prompt([
-          {
-            type: 'input',
-            name: 'beerName',
-            message: 'Enter the name of the beer:'
-          },
-          {
-            type: "autocomplete",
-            name: "breweryName",
-            message: "Enter the name of the brewery:",
-            source: (answersSoFar, input) => {
-              input = input || "";
-              const filteredBreweries = breweryNames.filter(
-                (breweryName) =>
-                  breweryName.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              );
-              if (!filteredBreweries.includes(input)) {
-                filteredBreweries.push(new inquirer.Separator());
-                filteredBreweries.push(input);
-              }
-              return filteredBreweries;
-            },
-            validate: (input) => {
-              if (!breweryNames.includes(input)) {
-                console.log("Brewery not found.");
-                return inquirer.prompt([
-                  {
-                    type: "confirm",
-                    name: "addBrewery",
-                    message: "Do you want to add a new brewery?",
-                  },
-                ]).then((answer) => {
-                  if (answer.addBrewery) {
-                    return inquirer.prompt([
-                      {
-                        type: "input",
-                        name: "breweryName",
-                        message: "Enter the name of the brewery:",
-                      },
-                      {
-                        type: "input",
-                        name: "breweryCity",
-                        message: "Enter the city of the brewery:",
-                      },
-                      {
-                        type: "input",
-                        name: "breweryState",
-                        message: "Enter the state of the brewery:",
-                      },
-                    ]).then((answers) => {
-                      return db.addBrewery(
-                        answers.breweryName,
-                        answers.breweryCity,
-                        answers.breweryState
-                      ).then(() => {
-                        console.log("Brewery added to database.");
-                        return true;
-                      });
-                    });
-                  } else {
-                    return "Please enter a valid brewery name.";
-                  }
-                });
-              }
-              return true;
-            },
-          },
-        ])
-    })
-}
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the name of the beer:",
+      },
+      {
+        type: "input",
+        name: "brewery_name",
+        message: "Enter the name of the brewery:",
+      },
+      {
+        type: "input",
+        name: "style_name",
+        message: "Enter the name of the style:",
+      },
+      {
+        type: "input",
+        name: "abv",
+        message: "Enter the ABV:",
+      },
+      {
+        type: "input",
+        name: "rating_id",
+        message: "Enter the rating ID:",
+      },
+      {
+        type: "input",
+        name: "date_drunk",
+        message: "Enter the date drunk (YYYY-MM-DD):",
+      },
+      {
+        type: "input",
+        name: "location_name",
+        message: "Enter the location name:",
+      },
+      {
+        type: "input",
+        name: "notes",
+        message: "Enter notes:",
+      },
+    ])
+    .then((answers) => {
+      const {
+        name,
+        brewery_name,
+        style_name,
+        abv,
+        rating_id,
+        date_drunk,
+        location_name,
+        notes,
+      } = answers;
+
+      db.addBeer(
+        name,
+        brewery_name,
+        style_name,
+        abv,
+        rating_id,
+        date_drunk,
+        location_name,
+        notes
+      )
+        .then(() => {
+          console.log("Beer added to database.");
+        })
+        .catch((error) => {
+          console.error("Error adding beer:", error);
+        });
+    });
+};
 
 const quit = () => {
   console.log("Goodbye!");
