@@ -39,6 +39,9 @@ const mainMenu = () => {
         case "Add new beer":
           addBeer();
           break;
+        case "View beers by brewery":
+          viewBeersByBrewery();
+          break;
         case "Quit":
           quit();
           break;
@@ -218,6 +221,41 @@ const addBeer = () => {
           console.error("Error:", error);
         });
     });
+};
+
+// !--- VIEW BEERS BY BREWERY ---! //
+
+const viewBeersByBrewery = async () => {
+  const { brewery_name } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "brewery_name",
+      message: "Enter the name of the brewery to view beers:",
+    },
+  ]);
+
+  try {
+    const beers = await db.viewBeersByBrewery(brewery_name);
+    if (beers.length === 0) {
+      console.log("No beers found for the specified brewery.")
+    } else {
+      console.log("Beers by Brewery:", brewery_name);
+      beers.forEach((beer) => {
+        console.log("--------------------");
+        console.log("Beer ID:", beer.id);
+        console.log("Beer Name:", beer.name);
+        console.log("Brewery Name:", beer.brewery_name);
+        console.log("Style:", beer.style_name);
+        console.log("ABV:", beer.abv);
+        console.log("Rating:", beer.rating);
+        console.log("Date Drunk:", beer.date_drunk);
+        console.log("Location:", beer.location_name);
+        console.log("Notes:", beer.notes);
+      })
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 };
 
 const quit = () => {

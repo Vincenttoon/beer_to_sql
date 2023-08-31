@@ -125,12 +125,25 @@ class DB {
   }
 
   viewBeersByBrewery(breweryName) {
-    return this.connection
+    return connection
       .promise()
       .query(
-        "SELECT beers.id, beers.name, breweries.name AS brewery_name, styles.name AS style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.name AS location_name, beers.notes FROM beers JOIN breweries ON beers.brewery_id = breweries.brewery_id JOIN styles ON beers.style_id = styles.style_id JOIN ratings ON beers.rating_id = ratings.rating_id LEFT JOIN locations ON beers.location_id = locations.location_id WHERE breweries.name = ? ORDER BY beers.name ASC;",
+        `SELECT beers.id, beers.name, b.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
+        FROM beers 
+        JOIN breweries AS b ON beers.brewery_name = b.brewery_name 
+        JOIN styles ON beers.style_name = styles.style_name 
+        JOIN ratings ON beers.rating_id = ratings.rating_id 
+        LEFT JOIN locations ON beers.location_name = locations.location_name 
+        WHERE b.brewery_name = ? 
+        ORDER BY beers.name ASC;`,
         [breweryName]
-      );
+      )
+      .then(([rows]) => {
+        return rows;
+      })
+      .catch((error) => {
+        throw error;
+      });
   }
 
   seeBeersSingleByStyle(style) {
