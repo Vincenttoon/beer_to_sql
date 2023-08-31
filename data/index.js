@@ -155,16 +155,6 @@ class DB {
       );
   }
 
-  seeBeersBySingleLocation(locationName) {
-    return this.connection.promise().query(
-      `SELECT beers.name, breweries.name, locations.name 
-      FROM beers 
-      JOIN breweries ON beers.brewery_id = breweries.brewery_id 
-      JOIN locations ON beers.location_id = locations.location_id 
-      WHERE locations.name = ?`,
-      [locationName]
-    );
-  }
 
   seeBeersBySingleRating(rating) {
     return this.connection.promise().query(
@@ -202,16 +192,6 @@ class DB {
     } catch (error) {
       console.error("Error adding brewery:", error);
     }
-  }
-
-  addLocation(name, city, state) {
-    return this.connection
-      .promise()
-      .query("INSERT INTO locations (name, city, state) VALUES (?, ?, ?)", [
-        name,
-        city,
-        state,
-      ]);
   }
 
   addStyle(name) {
