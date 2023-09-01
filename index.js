@@ -22,13 +22,16 @@ const mainMenu = () => {
           "Add new beer", // Done, with bugs
           "View beer by name", // Done
           "View beers by brewery", // Done
-          "View beers by rating", // Done, but could stand to be reordered
+          "View beers by rating", // Done
           "View beers by style", // Done
-          "Add brewery",
+          "Update beer rating",
+          "More Add",
+          "More View", // See ratings, see all styles, see all breweries
+          "Deletions",
+          "Add brewery", // Done
           "Add style",
           "Delete beer",
           "Delete brewery",
-          "View other", // See ratings, see all styles, see all breweries
           "Quit", // Done
         ],
       },
@@ -53,6 +56,12 @@ const mainMenu = () => {
         case "View beers by style":
           viewBeersByStyle();
           break;
+        case "Add brewery":
+          addBrewery();
+          break;
+        case "Add style":
+          addStyle();
+          break;
         case "Quit":
           quit();
           break;
@@ -62,7 +71,7 @@ const mainMenu = () => {
 
 // !--- VIEW ALL BEERS ---! \\
 
-const viewAllBeers = () => {
+const viewAllBeers = async () => {
   db.seeAllBeers()
     .then(([rows]) => {
       let beers = rows;
@@ -74,7 +83,7 @@ const viewAllBeers = () => {
 
 // !--- ADD BEER ---! \\
 
-const addBeer = () => {
+const addBeer = async () => {
   inquirer
     .prompt([
       {
@@ -423,6 +432,79 @@ const viewBeersByStyle = async () => {
   }
 };
 
+// !--- ADD BREWERY ---! \\
+
+const addBrewery = async () => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the name of the brewery:",
+      },
+      {
+        type: "input",
+        name: "city",
+        message: "Enter the city of the brewery:",
+      },
+      {
+        type: "input",
+        name: "state",
+        message: "Enter the state of the brewery:",
+      },
+    ])
+    .then((answers) => {
+      const { name, city, state } = answers;
+
+      return db
+        .addBrewery(name, city, state)
+        .then(() => {
+          console.log("New brewery added to the database.");
+          console.log("Brewery Name:", name);
+          console.log("Brewery City:", city);
+          console.log("Brewery State:", state);
+          mainMenu();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+
+
+// !--- Add Style ---! \\
+
+const addStyle = async () => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the name of the style:",
+      },
+    ])
+    .then((answers) => {
+      const { name } = answers;
+
+      return db
+        .addStyle(name)
+        .then(() => {
+          console.log("New style added to the database.");
+          console.log("Style Name:", name);
+          mainMenu();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+// !--- QUIT ---! \\
 const quit = () => {
   console.log("Goodbye!");
   process.exit();

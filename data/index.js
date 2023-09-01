@@ -199,7 +199,7 @@ class DB {
   addStyle(name) {
     return this.connection
       .promise()
-      .query("INSERT INTO styles (name) VALUES (?)", [name]);
+      .query("INSERT INTO styles (style_name) VALUES (?)", [name]);
   }
 
   // Function to add a new beer to the database
