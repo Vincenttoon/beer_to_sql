@@ -108,7 +108,7 @@ class DB {
       );
   }
 
-  viewBeersByBrewery(breweryName) {
+  seeBeersByBrewery(breweryName) {
     return connection
       .promise()
       .query(
@@ -139,7 +139,7 @@ class DB {
        JOIN ratings ON beers.rating_id = ratings.rating_id 
        LEFT JOIN locations ON beers.location_name = locations.location_name 
        WHERE styles.style_name = ? 
-       ORDER BY beers.name ASC;`,
+       ORDER BY b.brewery_name ASC, beers.name ASC;`, // Order by brewery_name first, then by beer name
       [style]
     );
   };
@@ -152,7 +152,8 @@ class DB {
       JOIN breweries ON beers.brewery_name = breweries.brewery_name 
       JOIN styles ON beers.style_name = styles.style_name 
       LEFT JOIN locations ON beers.location_name = locations.location_name 
-      WHERE ratings.value = ?;`,
+      WHERE ratings.value = ?
+      ORDER BY breweries.brewery_name ASC, beers.name ASC;`, // Order by brewery_name first, then by beer name
       [rating]
     );
   }

@@ -20,14 +20,15 @@ const mainMenu = () => {
         choices: [
           "View all beers", // Done
           "Add new beer", // Done, with bugs
-          "View beer by name",
+          "View beer by name", // Done
           "View beers by brewery", // Done
-          "View beers by rating", // Done
+          "View beers by rating", // Done, but could stand to be reordered
           "View beers by style", // Done
           "Add brewery",
           "Add style",
           "Delete beer",
           "Delete brewery",
+          "View other", // See ratings, see all styles, see all breweries
           "Quit", // Done
         ],
       },
@@ -255,10 +256,16 @@ const viewBeerByName = async () => {
       console.log("No beer found with the specified name.");
     } else {
       console.log("Beer Details:");
+      console.log("--------------------");
 
       // Create a new array of objects with formatted date_drunk and without the "id" and "location_name" properties
       const formattedBeers = beers.map((beer) => {
-        const { id, location_name, date_drunk, ...beerWithoutIdLocationAndDate } = beer;
+        const {
+          id,
+          location_name,
+          date_drunk,
+          ...beerWithoutIdLocationAndDate
+        } = beer;
         const formattedDate = new Date(date_drunk).toLocaleDateString("en-US");
         return { ...beerWithoutIdLocationAndDate, date_drunk: formattedDate };
       });
@@ -283,21 +290,30 @@ const viewBeersByBrewery = async () => {
   ]);
 
   try {
-    const beers = await db.viewBeersByBrewery(brewery_name);
+    const beers = await db.seeBeersByBrewery(brewery_name);
     if (beers.length === 0) {
       console.log("No beers found for the specified brewery.");
     } else {
-      console.log("Beers by Brewery:", brewery_name);
-      beers.forEach((beer) => {
-        console.log("--------------------");
-        console.log("Beer Name:", beer.name);
-        console.log("Brewery Name:", beer.brewery_name);
-        console.log("Style:", beer.style_name);
-        console.log("ABV:", beer.abv);
-        console.log("Rating:", beer.rating);
-        console.log("Date Drunk:", beer.date_drunk);
-        console.log("Notes:", beer.notes);
+      console.log("Beers by:", brewery_name);
+      console.log("--------------------");
+
+      // Create a new array of objects with formatted date_drunk and without the "id", "location_name", and "brewery_name" properties
+      const formattedBeers = beers.map((beer) => {
+        const {
+          id,
+          location_name,
+          brewery_name,
+          date_drunk,
+          ...beerWithoutIdLocationBreweryAndDate
+        } = beer;
+        const formattedDate = new Date(date_drunk).toLocaleDateString("en-US");
+        return {
+          ...beerWithoutIdLocationBreweryAndDate,
+          date_drunk: formattedDate,
+        };
       });
+
+      console.table(formattedBeers); // Display the formatted array
     }
   } catch (error) {
     console.error("Error:", error);
@@ -329,19 +345,34 @@ const viewBeersByRating = async () => {
       console.log("No beers found for the specified rating.");
     } else {
       console.log("Beers by Rating:", decimalRating.toFixed(2)); // Format rating to 2 decimal places
-      beers.forEach((beer) => {
-        console.log("--------------------");
-        console.log("Beer Name:", beer.name);
-        console.log("Brewery Name:", beer.brewery_name);
-        console.log("Style:", beer.style_name);
-        console.log("ABV:", beer.abv);
+      console.log("--------------------");
 
+      // Create a new array of objects with formatted date_drunk
+      const formattedBeers = beers.map((beer) => {
         const rating = parseFloat(beer.rating); // Parse rating to a float
-        console.log("Rating:", rating.toFixed(2)); // Format rating to 2 decimal places
-
-        console.log("Date Drunk:", beer.date_drunk);
-        console.log("Notes:", beer.notes);
+        const formattedDate = new Date(beer.date_drunk).toLocaleDateString(
+          "en-US"
+        );
+        return {
+          "Brewery Name": beer.brewery_name,
+          "Beer Name": beer.name,
+          ABV: beer.abv,
+          // "Rating": rating.toFixed(2), // Format rating to 2 decimal places
+          "Date Drunk": formattedDate,
+          Notes: beer.notes,
+        };
       });
+
+      const tableData = formattedBeers.map((beer) => ({
+        "Brewery Name": beer["Brewery Name"],
+        "Beer Name": beer["Beer Name"],
+        ABV: beer["ABV"],
+        // "Rating": beer["Rating"],
+        "Date Drunk": beer["Date Drunk"],
+        Notes: beer["Notes"],
+      }));
+
+      console.table(tableData); // Display the formatted array
     }
     mainMenu(); // Redirect back to the main menu
   } catch (error) {
@@ -368,17 +399,23 @@ const viewBeersByStyle = async () => {
       console.log("No beers found for the specified style.");
     } else {
       console.log("Beers by Style:", style);
-      beers.forEach((beer) => {
-        console.log("--------------------");
-        console.log("Beer Name:", beer.name);
-        console.log("Brewery Name:", beer.brewery_name);
-        console.log("Style:", beer.style_name);
-        console.log("ABV:", beer.abv);
-        console.log("Rating:", beer.rating);
+      console.log("--------------------");
 
-        console.log("Date Drunk:", beer.date_drunk);
-        console.log("Notes:", beer.notes);
+      // Create a new array of objects with formatted date_drunk and without the "id", "style_name", and "location_name" properties
+      const formattedBeers = beers.map((beer) => {
+        const {
+          id,
+          style_name,
+          location_name,
+          ...beerWithoutIdStyleAndLocation
+        } = beer;
+        const formattedDate = new Date(beer.date_drunk).toLocaleDateString(
+          "en-US"
+        );
+        return { ...beerWithoutIdStyleAndLocation, date_drunk: formattedDate };
       });
+
+      console.table(formattedBeers); // Display the formatted array
     }
     mainMenu(); // Redirect back to the main menu
   } catch (error) {
