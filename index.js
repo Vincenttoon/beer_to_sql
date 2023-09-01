@@ -42,6 +42,9 @@ const mainMenu = () => {
         case "View beers by brewery":
           viewBeersByBrewery();
           break;
+        case "View beers by rating":
+          viewBeersByRating();
+          break;
         case "Quit":
           quit();
           break;
@@ -49,9 +52,7 @@ const mainMenu = () => {
     });
 };
 
-
 // !--- VIEW ALL BEERS ---! \\
-
 
 const viewAllBeers = () => {
   db.seeAllBeers()
@@ -63,9 +64,7 @@ const viewAllBeers = () => {
     .then(() => mainMenu());
 };
 
-
 // !--- ADD BEER ---! \\
-
 
 const addBeer = () => {
   inquirer
@@ -268,7 +267,49 @@ const viewBeersByBrewery = async () => {
   }
 };
 
+// !--- VIEW BY RATING ---! \\
 
+const viewBeersByRating = async () => {
+  const { rating } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "rating",
+      message: "Enter the rating to view beers:",
+    },
+  ]);
+
+  try {
+    // Convert the input string to a decimal value
+    const decimalRating = parseFloat(rating);
+
+    const beersArray = await db.seeBeersBySingleRating(decimalRating);
+    const beers = beersArray[0]; // Access the inner array
+
+    if (beers.length === 0) {
+      console.log("No beers found for the specified rating.");
+    } else {
+      console.log("Beers by Rating:", decimalRating.toFixed(2)); // Format rating to 2 decimal places
+      beers.forEach((beer) => {
+        console.log("--------------------");
+        console.log("Beer ID:", beer.id);
+        console.log("Beer Name:", beer.name);
+        console.log("Brewery Name:", beer.brewery_name);
+        console.log("Style:", beer.style_name);
+        console.log("ABV:", beer.abv);
+
+        const rating = parseFloat(beer.rating); // Parse rating to a float
+        console.log("Rating:", rating.toFixed(2)); // Format rating to 2 decimal places
+
+        console.log("Date Drunk:", beer.date_drunk);
+        console.log("Location:", beer.location_name);
+        console.log("Notes:", beer.notes);
+      });
+    }
+    mainMenu(); // Redirect back to the main menu
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 const quit = () => {
   console.log("Goodbye!");
