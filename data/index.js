@@ -278,10 +278,16 @@ class DB {
       ]);
   }
 
-  deleteBeer(id) {
+  deleteBeerByName(name) {
     return this.connection
       .promise()
-      .query("DELETE FROM beers WHERE id = ?", [id]);
+      .query(`DELETE FROM beers WHERE name = ?`, [name]);
+  }
+
+  deleteBreweryByName(name) {
+    return this.connection
+      .promise()
+      .query(`DELETE FROM breweries WHERE brewery_name = ?`, [name]);
   }
 }
 

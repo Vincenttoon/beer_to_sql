@@ -10,6 +10,7 @@ const init = () => {
   mainMenu();
 };
 
+// !--- START MAIN MENU ---! \\
 const mainMenu = () => {
   inquirer
     .prompt([
@@ -29,7 +30,7 @@ const mainMenu = () => {
           "More View", // See ratings, see all styles, see all breweries
           "Deletions",
           "Add brewery", // Done
-          "Add style",
+          "Add style", // Done
           "Delete beer",
           "Delete brewery",
           "Quit", // Done
@@ -62,6 +63,12 @@ const mainMenu = () => {
         case "Add style":
           addStyle();
           break;
+        case "Delete beer":
+          deleteBeer();
+          break;
+        case "Delete brewery":
+          deleteBrewery();
+          break;
         case "Quit":
           quit();
           break;
@@ -69,7 +76,7 @@ const mainMenu = () => {
     });
 };
 
-// !--- VIEW ALL BEERS ---! \\
+// !--- START VIEW ALL BEERS ---! \\
 
 const viewAllBeers = async () => {
   db.seeAllBeers()
@@ -81,7 +88,7 @@ const viewAllBeers = async () => {
     .then(() => mainMenu());
 };
 
-// !--- ADD BEER ---! \\
+// !--- START ADD BEER ---! \\
 
 const addBeer = async () => {
   inquirer
@@ -247,7 +254,7 @@ const addBeer = async () => {
     });
 };
 
-// !--- VIEW BEER BY NAME ---! \\
+// !--- START VIEW BEER BY NAME ---! \\
 const viewBeerByName = async () => {
   const { name } = await inquirer.prompt([
     {
@@ -287,7 +294,7 @@ const viewBeerByName = async () => {
   }
 };
 
-// !--- VIEW BEERS BY BREWERY ---! \\
+// !--- START VIEW BEERS BY BREWERY ---! \\
 
 const viewBeersByBrewery = async () => {
   const { brewery_name } = await inquirer.prompt([
@@ -331,7 +338,7 @@ const viewBeersByBrewery = async () => {
   }
 };
 
-// !--- VIEW BY RATING ---! \\
+// !--- START VIEW BY RATING ---! \\
 
 const viewBeersByRating = async () => {
   const { rating } = await inquirer.prompt([
@@ -389,7 +396,7 @@ const viewBeersByRating = async () => {
   }
 };
 
-// !--- VIEW BEERS BY STYLE ---! \\
+// !--- START VIEW BEERS BY STYLE ---! \\
 
 const viewBeersByStyle = async () => {
   const { style } = await inquirer.prompt([
@@ -432,7 +439,7 @@ const viewBeersByStyle = async () => {
   }
 };
 
-// !--- ADD BREWERY ---! \\
+// !--- START ADD BREWERY ---! \\
 
 const addBrewery = async () => {
   inquirer
@@ -474,8 +481,7 @@ const addBrewery = async () => {
     });
 };
 
-
-// !--- Add Style ---! \\
+// !--- START ADD STYLE ---! \\
 
 const addStyle = async () => {
   inquirer
@@ -504,6 +510,93 @@ const addStyle = async () => {
       console.error("Error:", error);
     });
 };
+
+// !--- START DELETE BEER ---! \\
+
+const deleteBeer = async () => {
+  try {
+    const { name } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the name of the beer to delete:",
+      },
+    ]);
+
+    const beer = await db.findBeerByName(name);
+
+    if (beer.length === 0) {
+      console.log("No beer found with the specified name.");
+      mainMenu();
+    } else {
+      const { confirm } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "confirm",
+          message: `Are you sure you want to delete ${name}?`,
+          default: false,
+        },
+      ]);
+
+      if (confirm) {
+        await db.deleteBeerByName(name);
+        console.log(`${name} has been deleted.`);
+      } else {
+        console.log("Deletion canceled.");
+      }
+
+      mainMenu();
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    mainMenu();
+  }
+};
+
+// !--- START DELETE BREWERY ---! \\
+
+const deleteBrewery = async () => {
+  try {
+    const { name } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the name of the brewery to delete:",
+      },
+    ]);
+
+    const brewery = await db.getBreweryByName(name);
+
+    if (!brewery) {
+      console.log("No brewery found with the specified name.");
+      mainMenu();
+    } else {
+      const { confirm } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "confirm",
+          message: `DEVELOPER NOTE: If your desired brewery is assigned to a beer, it will not be deleted.
+          Are you sure you want to delete ${name}?
+          `,
+          default: false,
+        },
+      ]);
+
+      if (confirm) {
+        await db.deleteBreweryByName(name);
+        console.log(`${name} has been deleted.`);
+      } else {
+        console.log("Deletion canceled.");
+      }
+
+      mainMenu();
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    mainMenu();
+  }
+};
+
 // !--- QUIT ---! \\
 const quit = () => {
   console.log("Goodbye!");
