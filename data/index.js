@@ -157,8 +157,17 @@ class DB {
     );
   }
 
-  findBeerByName(){
-    
+  findBeerByName(name) {
+    return this.connection.promise().query(
+      `SELECT beers.id, beers.name, breweries.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
+      FROM beers 
+      JOIN ratings ON beers.rating_id = ratings.rating_id 
+      JOIN breweries ON beers.brewery_name = breweries.brewery_name 
+      JOIN styles ON beers.style_name = styles.style_name 
+      LEFT JOIN locations ON beers.location_name = locations.location_name 
+      WHERE beers.name = ?;`,
+      [name]
+    );
   }
 
   async addBrewery(name, city, state) {

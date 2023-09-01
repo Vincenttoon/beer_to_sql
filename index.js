@@ -28,7 +28,7 @@ const mainMenu = () => {
           "Add style",
           "Delete beer",
           "Delete brewery",
-          "Quit" // Done
+          "Quit", // Done
         ],
       },
     ])
@@ -39,6 +39,9 @@ const mainMenu = () => {
           break;
         case "Add new beer":
           addBeer();
+          break;
+        case "View beer by name":
+          viewBeerByName();
           break;
         case "View beers by brewery":
           viewBeersByBrewery();
@@ -234,7 +237,41 @@ const addBeer = () => {
     });
 };
 
-// !--- VIEW BEERS BY BREWERY ---! //
+// !--- VIEW BEER BY NAME ---! \\
+const viewBeerByName = async () => {
+  const { name } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "Enter the name of the beer:",
+    },
+  ]);
+
+  try {
+    const beerArray = await db.findBeerByName(name);
+    const beers = beerArray[0];
+
+    if (!beers) {
+      console.log("No beer found with the specified name.");
+    } else {
+      console.log("Beer Details:");
+
+      // Create a new array of objects with formatted date_drunk and without the "id" and "location_name" properties
+      const formattedBeers = beers.map((beer) => {
+        const { id, location_name, date_drunk, ...beerWithoutIdLocationAndDate } = beer;
+        const formattedDate = new Date(date_drunk).toLocaleDateString("en-US");
+        return { ...beerWithoutIdLocationAndDate, date_drunk: formattedDate };
+      });
+
+      console.table(formattedBeers); // Display the formatted array
+    }
+    mainMenu(); // Redirect back to the main menu
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+// !--- VIEW BEERS BY BREWERY ---! \\
 
 const viewBeersByBrewery = async () => {
   const { brewery_name } = await inquirer.prompt([
@@ -337,13 +374,6 @@ const viewBeersByStyle = async () => {
         console.log("Brewery Name:", beer.brewery_name);
         console.log("Style:", beer.style_name);
         console.log("ABV:", beer.abv);
-
-        // const ratingValue = parseFloat(beer.rating); // Assuming beer.rating contains the rating_id
-        // if (!isNaN(ratingValue)) {
-        //   console.log("Rating:", ratingValue.toFixed(2));
-        // } else {
-        //   console.log("Rating: N/A");
-        // }
         console.log("Rating:", beer.rating);
 
         console.log("Date Drunk:", beer.date_drunk);
