@@ -26,13 +26,13 @@ const mainMenu = () => {
           "View beers by rating", // Done
           "View beers by style", // Done
           "Update beer rating",
-          "More Add",
+          "More Add", // Create, move add brewery and style in
           "More View", // See ratings, see all styles, see all breweries
-          "Deletions",
+          "Deletions", // Create, move delete beer, brewery in. create delete style and put in here
           "Add brewery", // Done
           "Add style", // Done
-          "Delete beer",
-          "Delete brewery",
+          "Delete beer", // Done
+          "Delete brewery", // Done
           "Quit", // Done
         ],
       },
