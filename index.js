@@ -18,16 +18,17 @@ const mainMenu = () => {
         name: "mainMenu",
         message: "Please select an option:",
         choices: [
-          "View all beers",
-          "Add new beer",
-          "View beers by brewery",
-          "View beers by rating",
-          "View beers by style",
-          "Update beer rating",
-          "Add other",
-          "View other",
+          "View all beers", // Done
+          "Add new beer", // Done, with bugs
+          "View beer by name",
+          "View beers by brewery", // Done
+          "View beers by rating", // Done
+          "View beers by style", // Done
+          "Add brewery",
+          "Add style",
           "Delete beer",
-          "Quit",
+          "Delete brewery",
+          "Quit" // Done
         ],
       },
     ])
@@ -44,6 +45,9 @@ const mainMenu = () => {
           break;
         case "View beers by rating":
           viewBeersByRating();
+          break;
+        case "View beers by style":
+          viewBeersByStyle();
           break;
         case "Quit":
           quit();
@@ -249,14 +253,12 @@ const viewBeersByBrewery = async () => {
       console.log("Beers by Brewery:", brewery_name);
       beers.forEach((beer) => {
         console.log("--------------------");
-        console.log("Beer ID:", beer.id);
         console.log("Beer Name:", beer.name);
         console.log("Brewery Name:", beer.brewery_name);
         console.log("Style:", beer.style_name);
         console.log("ABV:", beer.abv);
         console.log("Rating:", beer.rating);
         console.log("Date Drunk:", beer.date_drunk);
-        console.log("Location:", beer.location_name);
         console.log("Notes:", beer.notes);
       });
     }
@@ -275,6 +277,7 @@ const viewBeersByRating = async () => {
       type: "input",
       name: "rating",
       message: "Enter the rating to view beers:",
+      message: "Please enter ratings in '#.##' format.",
     },
   ]);
 
@@ -291,7 +294,6 @@ const viewBeersByRating = async () => {
       console.log("Beers by Rating:", decimalRating.toFixed(2)); // Format rating to 2 decimal places
       beers.forEach((beer) => {
         console.log("--------------------");
-        console.log("Beer ID:", beer.id);
         console.log("Beer Name:", beer.name);
         console.log("Brewery Name:", beer.brewery_name);
         console.log("Style:", beer.style_name);
@@ -301,7 +303,50 @@ const viewBeersByRating = async () => {
         console.log("Rating:", rating.toFixed(2)); // Format rating to 2 decimal places
 
         console.log("Date Drunk:", beer.date_drunk);
-        console.log("Location:", beer.location_name);
+        console.log("Notes:", beer.notes);
+      });
+    }
+    mainMenu(); // Redirect back to the main menu
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+// !--- VIEW BEERS BY STYLE ---! \\
+
+const viewBeersByStyle = async () => {
+  const { style } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "style",
+      message: "Enter the style to view beers:",
+    },
+  ]);
+
+  try {
+    const beersArray = await db.seeBeersByStyle(style);
+    const beers = beersArray[0];
+
+    if (beers.length === 0) {
+      console.log("No beers found for the specified style.");
+    } else {
+      console.log("Beers by Style:", style);
+      beers.forEach((beer) => {
+        console.log("--------------------");
+        console.log("Beer Name:", beer.name);
+        console.log("Brewery Name:", beer.brewery_name);
+        console.log("Style:", beer.style_name);
+        console.log("ABV:", beer.abv);
+
+        // const ratingValue = parseFloat(beer.rating); // Assuming beer.rating contains the rating_id
+        // if (!isNaN(ratingValue)) {
+        //   console.log("Rating:", ratingValue.toFixed(2));
+        // } else {
+        //   console.log("Rating: N/A");
+        // }
+        console.log("Rating:", beer.rating);
+
+        console.log("Date Drunk:", beer.date_drunk);
         console.log("Notes:", beer.notes);
       });
     }

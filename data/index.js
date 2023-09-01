@@ -100,14 +100,6 @@ class DB {
       );
   }
 
-  seeAllBeersByStyle() {
-    return this.connection
-      .promise()
-      .query(
-        "SELECT styles.name AS style, beers.name,breweries.name AS brewery, beers.abv, ratings.value as ratings FROM beers JOIN styles ON beers.style_id = styles.style_id JOIN breweries ON beers.brewery_id = breweries.brewery_id JOIN ratings ON beers.rating_id = ratings.rating_id ORDER BY style ASC, beers.name ASC, breweries.name ASC, beers.abv ASC, ratings.value ASC;"
-      );
-  }
-
   seeBeerByRating() {
     return this.connection
       .promise()
@@ -138,14 +130,19 @@ class DB {
       });
   }
 
-  seeBeersSingleByStyle(style) {
-    return this.connection
-      .promise()
-      .query(
-        "SELECT * FROM beers JOIN styles ON beers.style_id = styles.style_id WHERE styles.name = ?",
-        [style]
-      );
-  }
+  seeBeersByStyle = (style) => {
+    return this.connection.promise().query(
+      `SELECT beers.id, beers.name, b.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
+       FROM beers 
+       JOIN breweries AS b ON beers.brewery_name = b.brewery_name 
+       JOIN styles ON beers.style_name = styles.style_name 
+       JOIN ratings ON beers.rating_id = ratings.rating_id 
+       LEFT JOIN locations ON beers.location_name = locations.location_name 
+       WHERE styles.style_name = ? 
+       ORDER BY beers.name ASC;`,
+      [style]
+    );
+  };
 
   seeBeersBySingleRating(rating) {
     return this.connection.promise().query(
@@ -158,6 +155,10 @@ class DB {
       WHERE ratings.value = ?;`,
       [rating]
     );
+  }
+
+  findBeerByName(){
+    
   }
 
   async addBrewery(name, city, state) {
