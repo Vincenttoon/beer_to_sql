@@ -25,7 +25,7 @@ const mainMenu = () => {
           "View beers by brewery", // Done
           "View beers by rating", // Done
           "View beers by style", // Done
-          "Update beer rating",
+          "Update beer rating", // Done
           "More Add", // Done
           "More View", // Done
           "Deletions", // Done
@@ -496,6 +496,8 @@ const moreView = () => {
     });
 };
 
+// !--- VIEW ALL BREWERIES ---! \\
+
 const viewAllBreweries = async () => {
   db.seeAllBreweries()
     .then(([rows]) => {
@@ -506,6 +508,8 @@ const viewAllBreweries = async () => {
     .then(() => moreView());
 };
 
+// !--- VIEW ALL STYLES ---! \\
+
 const viewAllStyles = async () => {
   db.seeAllStyles()
     .then(([rows]) => {
@@ -515,6 +519,8 @@ const viewAllStyles = async () => {
     })
     .then(() => moreView());
 };
+
+// !--- VIEW ALL RATINGS ---! \\
 
 const viewAllRatings = async () => {
   db.seeAllRatings()
@@ -556,7 +562,7 @@ const moreAdd = () => {
     });
 };
 
-// !--- START ADD BREWERY ---! \\
+// !--- ADD BREWERY ---! \\
 
 const addBrewery = async () => {
   inquirer
@@ -598,7 +604,7 @@ const addBrewery = async () => {
     });
 };
 
-// !--- START ADD STYLE ---! \\
+// !--- ADD STYLE ---! \\
 
 const addStyle = async () => {
   inquirer
@@ -666,7 +672,7 @@ const deletions = () => {
     });
 };
 
-// !--- START DELETE BEER ---! \\
+// !--- DELETE BEER ---! \\
 
 const deleteBeer = async () => {
   try {
@@ -708,7 +714,7 @@ const deleteBeer = async () => {
   }
 };
 
-// !--- START DELETE BREWERY ---! \\
+// !--- DELETE BREWERY ---! \\
 
 const deleteBrewery = async () => {
   try {

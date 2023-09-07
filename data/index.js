@@ -63,6 +63,10 @@ class DB {
   constructor(connection) {
     this.connection = connection;
   }
+  // ===================================\\
+  // !--- START VIEWING QUERIES ---! \\
+
+  // !--- SEE ALL BEERS ---! \\
 
   seeAllBeers() {
     return this.connection.promise().query(
@@ -77,16 +81,13 @@ class DB {
     );
   }
 
+  // !--- SEE ALL BREWERIES ---! \\
+
   seeAllBreweries() {
     return this.connection.promise().query("SELECT * FROM breweries");
   }
 
-  getBreweryNames() {
-    return this.connection
-      .promise()
-      .query("SELECT name FROM breweries")
-      .then(([rows]) => rows.map((row) => row.name));
-  }
+  // !--- SEE ALL STYLES ---! \\
 
   seeAllStyles() {
     return this.connection
@@ -94,9 +95,13 @@ class DB {
       .query("SELECT * FROM styles ORDER BY style_name, style_id");
   }
 
+  // !--- SEE ALL RATINGS ---! \\
+
   seeAllRatings() {
     return this.connection.promise().query("SELECT * FROM ratings");
   }
+
+  // !--- SEE ALL BEERS BY BREWERY ---! \\
 
   seeAllBeersByBrewery() {
     return this.connection
@@ -106,6 +111,8 @@ class DB {
       );
   }
 
+  // !--- SEE BEER BY RATING ---! \\
+
   seeBeerByRating() {
     return this.connection
       .promise()
@@ -113,6 +120,8 @@ class DB {
         "SELECT ratings.value AS rating_value, beers.name AS beer_name, breweries.name AS brewery_name, styles.name AS style_name, beers.abv, locations.name AS location_name, beers.notes FROM beers JOIN breweries ON beers.brewery_id = breweries.brewery_id JOIN styles ON beers.style_id = styles.style_id JOIN ratings ON beers.rating_id = ratings.rating_id LEFT JOIN locations ON beers.location_id = locations.location_id ORDER BY rating_value DESC, beer_name, brewery_name, style_name, abv, location_name, notes"
       );
   }
+
+  // !--- SEE BEERS BY BREWERY ---! \\
 
   seeBeersByBrewery(breweryName) {
     return connection
@@ -136,6 +145,8 @@ class DB {
       });
   }
 
+  // !--- SEE BEERS BY STYLE ---! \\
+
   seeBeersByStyle = (style) => {
     return this.connection.promise().query(
       `SELECT beers.id, beers.name, b.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
@@ -149,6 +160,8 @@ class DB {
       [style]
     );
   };
+
+  // !--- SEE BEERS BY SINGLE RATING ---! \\
 
   seeBeersBySingleRating(rating) {
     return this.connection.promise().query(
@@ -164,6 +177,61 @@ class DB {
     );
   }
 
+  // !--- GET BREWERIES BY NAME ---! \\
+
+  getBreweryNames() {
+    return this.connection
+      .promise()
+      .query("SELECT name FROM breweries")
+      .then(([rows]) => rows.map((row) => row.name));
+  }
+
+  // !--- GET SINGLE BREWERY BY NAME ---! \\
+
+  async getBreweryByName(breweryName) {
+    try {
+      const [rows] = await this.connection
+        .promise()
+        .query("SELECT * FROM breweries WHERE brewery_name = ?", [breweryName]);
+
+      if (rows.length > 0) {
+        return rows[0]; // Return the first brewery matching the name
+      } else {
+        const newBrewery = await promptForBreweryDetails(this.connection);
+        return newBrewery;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // !--- GET SINGLE STYLE BY NAME ---! \\
+
+  async getStyleByName(styleName) {
+    try {
+      const [rows] = await this.connection
+        .promise()
+        .query("SELECT * FROM styles WHERE style_name = ?", [styleName]);
+
+      if (rows.length > 0) {
+        return rows[0]; // Return the first style matching the name
+      } else {
+        // Handle the case when the style is not found
+        return null; // Or you can throw an error or handle it differently
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // !--- END VIEWING QUERIES ---! \\
+  // ===================================\\
+
+  // ===================================\\
+  // !--- START FUNCTIONAL QUERIES ---! \\
+
+  // !--- FIND BEER BY NAME ---! \\
+
   findBeerByName(name) {
     return this.connection.promise().query(
       `SELECT beers.id, beers.name, breweries.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
@@ -176,6 +244,8 @@ class DB {
       [name]
     );
   }
+
+  // !--- ADD NEW BREWERY ---! \\
 
   async addBrewery(name, city, state) {
     try {
@@ -202,11 +272,15 @@ class DB {
     }
   }
 
+  // !--- ADD NEW STYLE ---! \\
+
   addStyle(name) {
     return this.connection
       .promise()
       .query("INSERT INTO styles (style_name) VALUES (?)", [name]);
   }
+
+  // !--- ADD NEW BEER ---! \\
 
   // Function to add a new beer to the database
   async addBeer(
@@ -256,48 +330,17 @@ class DB {
     }
   }
 
-  // ... Other methods ...
-
-  async getBreweryByName(breweryName) {
-    try {
-      const [rows] = await this.connection
-        .promise()
-        .query("SELECT * FROM breweries WHERE brewery_name = ?", [breweryName]);
-
-      if (rows.length > 0) {
-        return rows[0]; // Return the first brewery matching the name
-      } else {
-        const newBrewery = await promptForBreweryDetails(this.connection);
-        return newBrewery;
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getStyleByName(styleName) {
-    try {
-      const [rows] = await this.connection
-        .promise()
-        .query("SELECT * FROM styles WHERE style_name = ?", [styleName]);
-
-      if (rows.length > 0) {
-        return rows[0]; // Return the first style matching the name
-      } else {
-        // Handle the case when the style is not found
-        return null; // Or you can throw an error or handle it differently
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-  
+  // !--- UPDATE BEER BY RATING ---! \\
   updateBeerRatingByName(beerName, newRating) {
     return this.connection
       .promise()
-      .query("UPDATE beers SET rating_id = (SELECT rating_id FROM ratings WHERE value = ?) WHERE name = ?", [newRating, beerName]);
+      .query(
+        "UPDATE beers SET rating_id = (SELECT rating_id FROM ratings WHERE value = ?) WHERE name = ?",
+        [newRating, beerName]
+      );
   }
-  
+
+  // !--- DELETE BEER BY NAME ---! \\
 
   deleteBeerByName(name) {
     return this.connection
@@ -305,12 +348,15 @@ class DB {
       .query(`DELETE FROM beers WHERE name = ?`, [name]);
   }
 
+  // !--- DELETE BREWERY BY NAME ---! \\
+
   deleteBreweryByName(name) {
     return this.connection
       .promise()
       .query(`DELETE FROM breweries WHERE brewery_name = ?`, [name]);
   }
 
+  // !--- DELETE STYLE BY NAME ---! \\
   async deleteStyleByName(styleName) {
     try {
       const result = await this.connection
@@ -325,6 +371,9 @@ class DB {
       throw error;
     }
   }
+
+  // !--- END FUNCTIONAL QUERIES ---! \\
+  // ===================================\\
 }
 
 module.exports = new DB(connection);

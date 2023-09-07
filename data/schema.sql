@@ -9,12 +9,13 @@ DROP TABLE IF EXISTS ratings;
 DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS styles;
 
-
+-- Styles
 CREATE TABLE styles (
   style_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   style_name VARCHAR(255)
 );
 
+-- Breweries
 CREATE TABLE breweries (
   brewery_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   brewery_name VARCHAR(255) NOT NULL,
@@ -22,6 +23,7 @@ CREATE TABLE breweries (
   brewery_state VARCHAR(50)
 );
 
+-- Locations
 CREATE TABLE locations (
   location_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   location_name VARCHAR(255) NOT NULL,
@@ -29,15 +31,18 @@ CREATE TABLE locations (
   location_state VARCHAR(50)
 );
 
+-- Table Alterations
 ALTER TABLE styles ADD INDEX (style_name);
 ALTER TABLE breweries ADD INDEX (brewery_name);
 ALTER TABLE locations ADD INDEX (location_name);
 
+-- Ratings
 CREATE TABLE ratings (
   rating_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   value DECIMAL(3,2) NOT NULL
 );
 
+-- Beers, the grand daddy
 CREATE TABLE beers (
   id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
