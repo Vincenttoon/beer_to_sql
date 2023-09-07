@@ -27,7 +27,38 @@ VALUES
     ('Chimay Abbaye', 'Chimay', 'Belgium');
     ('Church Street', 'Itasca', 'IL');
     ('3 Floyds', 'Munster', 'IN');
+    ('Ale Asylum', 'Madison', 'WI');
+    ('B Nektar', 'Ferndale', 'MI');
+    ('Bent River', 'Rock Island', 'IL');
+    ('Brewdog', 'Cincinnati', 'OH');
+    ('Brooklyn', 'Brooklyn', 'NY');
+    ('Cigar City', 'Tampa Bay', 'FL');
+    ('Civil Life', 'St. Louis', 'IL');
+    ('Dark Horse', 'Marshal', 'MI');
+    ('Delirium', 'Melle', 'Belgium');
+    ('Deschutes', 'Bend', 'OR');
+    ('Destihl', 'Normal', 'IL');
+    ('Dogfish Head', 'Milton', 'DE');
+    ('Elysian', 'Seattle', 'WA');
+    ('Evil Twin', 'Queens', 'NY');
+    ('Excel', 'Breese', 'IL');
+    ('Firestone Walker', 'Paso Robles', 'CA');
+    ('Fat Orange Cat', 'East Hampton', 'CN');
+    ('Founders', 'Grand Rapids', 'MI');
+    ('Goose Island', 'Chicago', 'IL');
+    ('Great Lakes', 'Cleveland', 'OH');
+    ('Hacker Pschorr', 'Munich', 'Germany');
+    ('Half Acre', 'Chicago', 'IL');
+    ('Heavy Riff', 'St. Louis', 'MO');
+    ('Hoppin Frog', 'Akron', 'OH');
+    ('Industry', 'Peoria', 'IL');
+    ('Kronenberg', 'Obernai', 'France');
+    ('Lost Coast', 'Eureka', 'CA');
+    ('Labatt', 'Toronto', 'Canada');
+    ('Lagunitas', 'Chicago', 'IL');
+    ('Left Hand', 'Longmont', 'CO');
     
+
 
 
 INSERT INTO ratings (value)

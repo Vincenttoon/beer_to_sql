@@ -48,7 +48,7 @@ CREATE TABLE beers (
   name VARCHAR(255) NOT NULL,
   brewery_name VARCHAR(255) NOT NULL, -- Add brewery_name column
   style_name VARCHAR(255) NOT NULL,
-  abv DECIMAL(3,2) NOT NULL,
+  abv DECIMAL(10,2) NOT NULL,
   rating_id INT NOT NULL,
   date_drunk DATE NOT NULL,
   location_name VARCHAR(255),
