@@ -53,6 +53,9 @@ const mainMenu = () => {
         case "View beers by style":
           viewBeersByStyle();
           break;
+        case "Update beer rating":
+          updateBeerRatingByName();
+          break;
         case "More Add":
           moreAdd();
           break;
@@ -61,12 +64,6 @@ const mainMenu = () => {
           break;
         case "Deletions":
           deletions();
-          break;
-        case "Delete beer":
-          deleteBeer();
-          break;
-        case "Delete brewery":
-          deleteBrewery();
           break;
         case "Quit":
           quit();
@@ -115,7 +112,7 @@ const addBeer = async () => {
       {
         type: "input",
         name: "rating_id",
-        message: "Enter the rating ID:",
+        message: "Enter the rating ID (20 = 5.00, 10 = 2.50, 1 = 0.25):",
       },
       {
         type: "input",
@@ -435,6 +432,30 @@ const viewBeersByStyle = async () => {
     mainMenu(); // Redirect back to the main menu
   } catch (error) {
     console.error("Error:", error);
+  }
+};
+
+const updateBeerRatingByName = async () => {
+  try {
+    const { name, newRating } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the name of the beer to update the rating:",
+      },
+      {
+        type: "input",
+        name: "newRating",
+        message: "Enter the new rating (eg: #.## from 0.25 to 5.00):",
+      },
+    ]);
+
+    await db.updateBeerRatingByName(name, newRating);
+    console.log(`${name}'s rating has been updated to ${newRating}.`);
+    mainMenu();
+  } catch (error) {
+    console.error("Error:", error);
+    mainMenu();
   }
 };
 

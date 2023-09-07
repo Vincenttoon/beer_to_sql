@@ -291,15 +291,13 @@ class DB {
       throw error;
     }
   }
-
-  updateBeerRating(beerId, newRating) {
+  
+  updateBeerRatingByName(beerName, newRating) {
     return this.connection
       .promise()
-      .query("UPDATE beers SET rating_id = ? WHERE id = ?", [
-        newRating,
-        beerId,
-      ]);
+      .query("UPDATE beers SET rating_id = (SELECT rating_id FROM ratings WHERE value = ?) WHERE name = ?", [newRating, beerName]);
   }
+  
 
   deleteBeerByName(name) {
     return this.connection
