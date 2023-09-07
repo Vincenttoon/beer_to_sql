@@ -26,13 +26,9 @@ const mainMenu = () => {
           "View beers by rating", // Done
           "View beers by style", // Done
           "Update beer rating",
-          "More Add", // Create, move add brewery and style in
+          "More Add",
           "More View", // See ratings, see all styles, see all breweries
           "Deletions", // Create, move delete beer, brewery in. create delete style and put in here
-          "Add brewery", // Done
-          "Add style", // Done
-          "Delete beer", // Done
-          "Delete brewery", // Done
           "Quit", // Done
         ],
       },
@@ -57,11 +53,14 @@ const mainMenu = () => {
         case "View beers by style":
           viewBeersByStyle();
           break;
-        case "Add brewery":
-          addBrewery();
+        case "More Add":
+          moreAdd();
           break;
-        case "Add style":
-          addStyle();
+        case "More View":
+          moreView();
+          break;
+        case "Deletions":
+          deletions();
           break;
         case "Delete beer":
           deleteBeer();
@@ -439,6 +438,36 @@ const viewBeersByStyle = async () => {
   }
 };
 
+// !--- MORE ADD ---! \\
+
+const moreAdd = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "moreAdd",
+        message: "Please select an option:",
+        choices: ["Add Brewery", "Add Style", "Main Menu", "Quit"],
+      },
+    ])
+    .then((response) => {
+      switch (response.moreAdd) {
+        case "Add Brewery":
+          addBrewery();
+          break;
+        case "Add Style":
+          addStyle();
+          break;
+        case "Main Menu":
+          mainMenu();
+          break;
+        case "Quit":
+          quit();
+          break;
+      }
+    });
+};
+
 // !--- START ADD BREWERY ---! \\
 
 const addBrewery = async () => {
@@ -508,6 +537,44 @@ const addStyle = async () => {
     })
     .catch((error) => {
       console.error("Error:", error);
+    });
+};
+
+// !--- DELETIONS MENU ---! \\
+const deletions = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "deletion",
+        message: "Please select an option:",
+        choices: [
+          "Delete Beer",
+          "Delete Brewery",
+          "Delete Style",
+          "Main Menu",
+          "Quit",
+        ],
+      },
+    ])
+    .then((response) => {
+      switch (response.deletion) {
+        case "Delete Beer":
+          deleteBeer();
+          break;
+        case "Delete Brewery":
+          deleteBrewery();
+          break;
+        case "Delete Style":
+          deleteStyle();
+          break;
+        case "Main Menu":
+          mainMenu();
+          break;
+        case "Quit":
+          quit();
+          break;
+      }
     });
 };
 
@@ -585,6 +652,49 @@ const deleteBrewery = async () => {
       if (confirm) {
         await db.deleteBreweryByName(name);
         console.log(`${name} has been deleted.`);
+      } else {
+        console.log("Deletion canceled.");
+      }
+
+      mainMenu();
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    mainMenu();
+  }
+};
+
+// !--- DELETE STYLE ---! \\
+
+const deleteStyle = async () => {
+  try {
+    const { name } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the name of the style to delete:",
+      },
+    ]);
+
+    // Check if the style exists
+    const style = await db.getStyleByName(name);
+
+    if (!style) {
+      console.log("No style found with the specified name.");
+      mainMenu();
+    } else {
+      const { confirm } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "confirm",
+          message: `Are you sure you want to delete the style "${name}"?`,
+          default: false,
+        },
+      ]);
+
+      if (confirm) {
+        await db.deleteStyleByName(name);
+        console.log(`Style "${name}" has been deleted.`);
       } else {
         console.log("Deletion canceled.");
       }
