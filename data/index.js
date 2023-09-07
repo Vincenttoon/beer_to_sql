@@ -89,7 +89,13 @@ class DB {
   }
 
   seeAllStyles() {
-    return this.connection.promise().query("SELECT * FROM styles");
+    return this.connection
+      .promise()
+      .query("SELECT * FROM styles ORDER BY style_name, style_id");
+  }
+
+  seeAllRatings() {
+    return this.connection.promise().query("SELECT * FROM ratings");
   }
 
   seeAllBeersByBrewery() {
@@ -269,6 +275,23 @@ class DB {
     }
   }
 
+  async getStyleByName(styleName) {
+    try {
+      const [rows] = await this.connection
+        .promise()
+        .query("SELECT * FROM styles WHERE style_name = ?", [styleName]);
+
+      if (rows.length > 0) {
+        return rows[0]; // Return the first style matching the name
+      } else {
+        // Handle the case when the style is not found
+        return null; // Or you can throw an error or handle it differently
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   updateBeerRating(beerId, newRating) {
     return this.connection
       .promise()
@@ -288,6 +311,21 @@ class DB {
     return this.connection
       .promise()
       .query(`DELETE FROM breweries WHERE brewery_name = ?`, [name]);
+  }
+
+  async deleteStyleByName(styleName) {
+    try {
+      const result = await this.connection
+        .promise()
+        .query("DELETE FROM styles WHERE style_name = ?", [styleName]);
+
+      if (result.affectedRows > 0) {
+        // Style deleted successfully
+        console.log(`${styleName} has been deleted.`);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

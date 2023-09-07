@@ -26,9 +26,9 @@ const mainMenu = () => {
           "View beers by rating", // Done
           "View beers by style", // Done
           "Update beer rating",
-          "More Add",
-          "More View", // See ratings, see all styles, see all breweries
-          "Deletions", // Create, move delete beer, brewery in. create delete style and put in here
+          "More Add", // Done
+          "More View", // Done
+          "Deletions", // Done
           "Quit", // Done
         ],
       },
@@ -436,6 +436,73 @@ const viewBeersByStyle = async () => {
   } catch (error) {
     console.error("Error:", error);
   }
+};
+
+const moreView = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "moreView",
+        message: "Please select an option:",
+        choices: [
+          "View all Breweries",
+          "View all Styles",
+          "View all Ratings",
+          "Main Menu",
+          "Quit",
+        ],
+      },
+    ])
+    .then((response) => {
+      switch (response.moreView) {
+        case "View all Breweries":
+          viewAllBreweries();
+          break;
+        case "View all Styles":
+          viewAllStyles();
+          break;
+        case "View all Ratings":
+          viewAllRatings();
+          break;
+        case "Main Menu":
+          mainMenu();
+          break;
+        case "Quit":
+          quit();
+          break;
+      }
+    });
+};
+
+const viewAllBreweries = async () => {
+  db.seeAllBreweries()
+    .then(([rows]) => {
+      let breweries = rows;
+
+      console.table(breweries);
+    })
+    .then(() => moreView());
+};
+
+const viewAllStyles = async () => {
+  db.seeAllStyles()
+    .then(([rows]) => {
+      let styles = rows;
+
+      console.table(styles);
+    })
+    .then(() => moreView());
+};
+
+const viewAllRatings = async () => {
+  db.seeAllRatings()
+    .then(([rows]) => {
+      let ratings = rows;
+
+      console.table(ratings);
+    })
+    .then(() => moreView());
 };
 
 // !--- MORE ADD ---! \\
