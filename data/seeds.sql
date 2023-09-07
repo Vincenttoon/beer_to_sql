@@ -2,6 +2,33 @@ INSERT INTO breweries (brewery_name, brewery_city, brewery_state)
 VALUES 
     -- 1
     ('4 Hands', 'St. Louis', 'MO');
+    ('18th Street', 'Hammond', 'IN');
+    ('21st Amendment', 'San Leandro', 'CA');
+    ('Against the Grain', 'Louisville', 'KY');
+    ('Ace', 'Sebastopol', 'CA');
+    ('Alarmist', 'Chicago', 'IL');
+    ('Alaskan', 'Juneau', 'AK');
+    ('Alesmith', 'San Diego', 'CA');
+    ('Anchor', 'San Francisco', 'CA');
+    ('Avery', 'Boulder', 'CO');
+    ('Ayinger', 'Aying, Bavaria', 'Germany')
+    ('Blind Pig', 'Champaign', 'IL');
+    ('Big Muddy', 'Murphysboro', 'IL');
+    ('Bear Republic', 'Sonoma County', 'CA');
+    ("Bell's", 'Kalamazoo', 'MI');
+    ("Blakes", 'Armada', "MI");
+    ('Boulevard', 'Kansas City', 'MO');
+    ('Breckenridge', 'Breckenridge', 'CO');
+    ('Brick River', 'St. Louis', 'MO');
+    ('Brickstone', 'Bourbonnais', 'IL');
+    ('The Bruery', 'Placentia', 'CA');
+    ('Carlsberg', 'Fredericia', 'Denmark');
+    ('Central Waters', 'Amherst', 'WI');
+    ('Chimay Abbaye', 'Chimay', 'Belgium');
+    ('Church Street', 'Itasca', 'IL');
+    ('3 Floyds', 'Munster', 'IN');
+    
+
 
 INSERT INTO ratings (value)
 VALUES
