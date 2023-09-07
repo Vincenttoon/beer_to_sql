@@ -1,4 +1,3 @@
-const connection = require("./data/connection");
 const inquirer = require("inquirer");
 const { AutocompletePrompt } = import("inquirer-autocomplete-prompt");
 const db = require("./data");
