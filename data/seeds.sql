@@ -74,7 +74,40 @@ VALUES
     ('Old Irving', 'Chicago', 'IL');
     ('Old Nation', 'Williamston', 'MI');
     ('Ommegang', 'Cooperstown', 'NY');
+    ('Oskar Blues', 'Brevard', 'NC');
+    ('Paulaner', 'Munich', 'Germany');
+    ('Penrose', 'Geneva', 'IL');
+    ('Perennial', 'St. Louis', 'MO');
+    ('Prairie', 'Oklahoma City', 'OK');
+    ('Port', 'San Marcos', 'CA');
+    ('Revolution', 'Chicago', 'IL');
+    ('Rhinegeist', 'Cincinatti', 'OH');
+    ('Rogue', 'Astoria', 'OR');
+    ('Stubborn German', 'Waterloo', 'IL');
+    ('Sun King', 'Indianapolis', 'IN');
+    ('Schlafly', 'St. Louis', 'MO');
+    ('SweetWater', 'Atlanta', 'GA');
+    ('Sierra Nevada', 'Mills River', 'NC');
+    ('Sixpoint', 'Brooklyn', 'NY');
+    ('Ska', 'Durango', 'CO');
+    ('Southern Tier', 'Lakewood', 'NY');
+    ('Spaten', "Munchen", 'Germany');
+    ('Stone', 'Escondido', 'CA');
+    ('Surly', 'Minneapolis', 'MN');
+    ('Toppling Goliath', 'Decorah', 'IA');
+    ('Triptych', 'Savoy', 'IL');
+    ('Urban Chestnut', 'St. Louis', 'MO');
+    ('Upland', 'Bloomington', 'IN');
+    ('Veltins', 'Grevenstein', 'Germany');
+    ('Wake', 'Rock Island', 'IL');
+    ('Warpigs', 'Munster', 'IN');
+    ('Virtue', 'Fennville', 'MI');
+    ('White Rooster', 'Sparta', 'IL');
+    ('Wells', 'Belford', 'England');
+    ('Westmalle', 'Westmalle', 'Belgium');
+    ('2nd Shift', 'St. Louis', 'MO');
     
+
 
 
 
