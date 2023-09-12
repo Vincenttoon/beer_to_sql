@@ -57,7 +57,25 @@ VALUES
     ('Labatt', 'Toronto', 'Canada');
     ('Lagunitas', 'Chicago', 'IL');
     ('Left Hand', 'Longmont', 'CO');
+    ('Lost Coast', 'Eureka', 'CA');
+    ('Maplewood', 'Chicago', 'IL');
+    ('Mikerphone', 'Chicago', 'IL');
+    ('Millpond', 'Millstadt', 'IL');
+    ('Modelo', 'Mexico City', 'Mexico');
+    ('Modern Times', 'San Diego', 'CA');
+    ('Moody Tongue', 'Chicago', 'IL');
+    ('More', 'Villa Park', 'IL');
+    ('Noon Whistle', 'Chicago', 'IL');
+    ('Narrow Gauge', 'St. Louis', 'MO');
+    ('North Coast', 'Fort Bragg', 'CA');
+    ("O'fallon", "O'fallon", 'MO');
+    ('Odell', 'Fort Collins', 'CO');
+    ('Old Bakery', 'Alton', 'IL');
+    ('Old Irving', 'Chicago', 'IL');
+    ('Old Nation', 'Williamston', 'MI');
+    ('Ommegang', 'Cooperstown', 'NY');
     
+
 
 
 
