@@ -1,112 +1,112 @@
 INSERT INTO breweries (brewery_name, brewery_city, brewery_state)
 VALUES 
     -- 1
-    ('4 Hands', 'St. Louis', 'MO');
-    ('18th Street', 'Hammond', 'IN');
-    ('21st Amendment', 'San Leandro', 'CA');
-    ('Against the Grain', 'Louisville', 'KY');
-    ('Ace', 'Sebastopol', 'CA');
-    ('Alarmist', 'Chicago', 'IL');
-    ('Alaskan', 'Juneau', 'AK');
-    ('Alesmith', 'San Diego', 'CA');
-    ('Anchor', 'San Francisco', 'CA');
-    ('Avery', 'Boulder', 'CO');
-    ('Ayinger', 'Aying, Bavaria', 'Germany')
-    ('Blind Pig', 'Champaign', 'IL');
-    ('Big Muddy', 'Murphysboro', 'IL');
-    ('Bear Republic', 'Sonoma County', 'CA');
-    ("Bell's", 'Kalamazoo', 'MI');
-    ("Blakes", 'Armada', "MI");
-    ('Boulevard', 'Kansas City', 'MO');
-    ('Breckenridge', 'Breckenridge', 'CO');
-    ('Brick River', 'St. Louis', 'MO');
-    ('Brickstone', 'Bourbonnais', 'IL');
-    ('The Bruery', 'Placentia', 'CA');
-    ('Carlsberg', 'Fredericia', 'Denmark');
-    ('Central Waters', 'Amherst', 'WI');
-    ('Chimay Abbaye', 'Chimay', 'Belgium');
-    ('Church Street', 'Itasca', 'IL');
-    ('3 Floyds', 'Munster', 'IN');
-    ('Ale Asylum', 'Madison', 'WI');
-    ('B Nektar', 'Ferndale', 'MI');
-    ('Bent River', 'Rock Island', 'IL');
-    ('Brewdog', 'Cincinnati', 'OH');
-    ('Brooklyn', 'Brooklyn', 'NY');
-    ('Cigar City', 'Tampa Bay', 'FL');
-    ('Civil Life', 'St. Louis', 'IL');
-    ('Dark Horse', 'Marshal', 'MI');
-    ('Delirium', 'Melle', 'Belgium');
-    ('Deschutes', 'Bend', 'OR');
-    ('Destihl', 'Normal', 'IL');
-    ('Dogfish Head', 'Milton', 'DE');
-    ('Elysian', 'Seattle', 'WA');
-    ('Evil Twin', 'Queens', 'NY');
-    ('Excel', 'Breese', 'IL');
-    ('Firestone Walker', 'Paso Robles', 'CA');
-    ('Fat Orange Cat', 'East Hampton', 'CN');
-    ('Founders', 'Grand Rapids', 'MI');
-    ('Goose Island', 'Chicago', 'IL');
-    ('Great Lakes', 'Cleveland', 'OH');
-    ('Hacker Pschorr', 'Munich', 'Germany');
-    ('Half Acre', 'Chicago', 'IL');
-    ('Heavy Riff', 'St. Louis', 'MO');
-    ('Hoppin Frog', 'Akron', 'OH');
-    ('Industry', 'Peoria', 'IL');
-    ('Kronenberg', 'Obernai', 'France');
-    ('Lost Coast', 'Eureka', 'CA');
-    ('Labatt', 'Toronto', 'Canada');
-    ('Lagunitas', 'Chicago', 'IL');
-    ('Left Hand', 'Longmont', 'CO');
-    ('Lost Coast', 'Eureka', 'CA');
-    ('Maplewood', 'Chicago', 'IL');
-    ('Mikerphone', 'Chicago', 'IL');
-    ('Millpond', 'Millstadt', 'IL');
-    ('Modelo', 'Mexico City', 'Mexico');
-    ('Modern Times', 'San Diego', 'CA');
-    ('Moody Tongue', 'Chicago', 'IL');
-    ('More', 'Villa Park', 'IL');
-    ('Noon Whistle', 'Chicago', 'IL');
-    ('Narrow Gauge', 'St. Louis', 'MO');
-    ('North Coast', 'Fort Bragg', 'CA');
-    ("O'fallon", "O'fallon", 'MO');
-    ('Odell', 'Fort Collins', 'CO');
-    ('Old Bakery', 'Alton', 'IL');
-    ('Old Irving', 'Chicago', 'IL');
-    ('Old Nation', 'Williamston', 'MI');
-    ('Ommegang', 'Cooperstown', 'NY');
-    ('Oskar Blues', 'Brevard', 'NC');
-    ('Paulaner', 'Munich', 'Germany');
-    ('Penrose', 'Geneva', 'IL');
-    ('Perennial', 'St. Louis', 'MO');
-    ('Prairie', 'Oklahoma City', 'OK');
-    ('Port', 'San Marcos', 'CA');
-    ('Revolution', 'Chicago', 'IL');
-    ('Rhinegeist', 'Cincinatti', 'OH');
-    ('Rogue', 'Astoria', 'OR');
-    ('Stubborn German', 'Waterloo', 'IL');
-    ('Sun King', 'Indianapolis', 'IN');
-    ('Schlafly', 'St. Louis', 'MO');
-    ('SweetWater', 'Atlanta', 'GA');
-    ('Sierra Nevada', 'Mills River', 'NC');
-    ('Sixpoint', 'Brooklyn', 'NY');
-    ('Ska', 'Durango', 'CO');
-    ('Southern Tier', 'Lakewood', 'NY');
-    ('Spaten', "Munchen", 'Germany');
-    ('Stone', 'Escondido', 'CA');
-    ('Surly', 'Minneapolis', 'MN');
-    ('Toppling Goliath', 'Decorah', 'IA');
-    ('Triptych', 'Savoy', 'IL');
-    ('Urban Chestnut', 'St. Louis', 'MO');
-    ('Upland', 'Bloomington', 'IN');
-    ('Veltins', 'Grevenstein', 'Germany');
-    ('Wake', 'Rock Island', 'IL');
-    ('Warpigs', 'Munster', 'IN');
-    ('Virtue', 'Fennville', 'MI');
-    ('White Rooster', 'Sparta', 'IL');
-    ('Wells', 'Belford', 'England');
-    ('Westmalle', 'Westmalle', 'Belgium');
+    ('4 Hands', 'St. Louis', 'MO'),
+    ('18th Street', 'Hammond', 'IN'),
+    ('21st Amendment', 'San Leandro', 'CA'),
+    ('Against the Grain', 'Louisville', 'KY'),
+    ('Ace', 'Sebastopol', 'CA'),
+    ('Alarmist', 'Chicago', 'IL'),
+    ('Alaskan', 'Juneau', 'AK'),
+    ('Alesmith', 'San Diego', 'CA'),
+    ('Anchor', 'San Francisco', 'CA'),
+    ('Avery', 'Boulder', 'CO'),
+    ('Ayinger', 'Aying, Bavaria', 'Germany'),
+    ('Blind Pig', 'Champaign', 'IL'),
+    ('Big Muddy', 'Murphysboro', 'IL'),
+    ('Bear Republic', 'Sonoma County', 'CA'),
+    ("Bell's", 'Kalamazoo', 'MI'),
+    ("Blakes", 'Armada', "MI"),
+    ('Boulevard', 'Kansas City', 'MO'),
+    ('Breckenridge', 'Breckenridge', 'CO'),
+    ('Brick River', 'St. Louis', 'MO'),
+    ('Brickstone', 'Bourbonnais', 'IL'),
+    ('The Bruery', 'Placentia', 'CA'),
+    ('Carlsberg', 'Fredericia', 'Denmark'),
+    ('Central Waters', 'Amherst', 'WI'),
+    ('Chimay Abbaye', 'Chimay', 'Belgium'),
+    ('Church Street', 'Itasca', 'IL'),
+    ('3 Floyds', 'Munster', 'IN'),
+    ('Ale Asylum', 'Madison', 'WI'),
+    ('B Nektar', 'Ferndale', 'MI'),
+    ('Bent River', 'Rock Island', 'IL'),
+    ('Brewdog', 'Cincinnati', 'OH'),
+    ('Brooklyn', 'Brooklyn', 'NY'),
+    ('Cigar City', 'Tampa Bay', 'FL'),
+    ('Civil Life', 'St. Louis', 'IL'),
+    ('Dark Horse', 'Marshal', 'MI'),
+    ('Delirium', 'Melle', 'Belgium'),
+    ('Deschutes', 'Bend', 'OR'),
+    ('Destihl', 'Normal', 'IL'),
+    ('Dogfish Head', 'Milton', 'DE'),
+    ('Elysian', 'Seattle', 'WA'),
+    ('Evil Twin', 'Queens', 'NY'),
+    ('Excel', 'Breese', 'IL'),
+    ('Firestone Walker', 'Paso Robles', 'CA'),
+    ('Fat Orange Cat', 'East Hampton', 'CN'),
+    ('Founders', 'Grand Rapids', 'MI'),
+    ('Goose Island', 'Chicago', 'IL'),
+    ('Great Lakes', 'Cleveland', 'OH'),
+    ('Hacker Pschorr', 'Munich', 'Germany'),
+    ('Half Acre', 'Chicago', 'IL'),
+    ('Heavy Riff', 'St. Louis', 'MO'),
+    ('Hoppin Frog', 'Akron', 'OH'),
+    ('Industry', 'Peoria', 'IL'),
+    ('Kronenberg', 'Obernai', 'France'),
+    ('Lost Coast', 'Eureka', 'CA'),
+    ('Labatt', 'Toronto', 'Canada'),
+    ('Lagunitas', 'Chicago', 'IL'),
+    ('Left Hand', 'Longmont', 'CO'),
+    ('Lost Coast', 'Eureka', 'CA'),
+    ('Maplewood', 'Chicago', 'IL'),
+    ('Mikerphone', 'Chicago', 'IL'),
+    ('Millpond', 'Millstadt', 'IL'),
+    ('Modelo', 'Mexico City', 'Mexico'),
+    ('Modern Times', 'San Diego', 'CA'),
+    ('Moody Tongue', 'Chicago', 'IL'),
+    ('More', 'Villa Park', 'IL'),
+    ('Noon Whistle', 'Chicago', 'IL'),
+    ('Narrow Gauge', 'St. Louis', 'MO'),
+    ('North Coast', 'Fort Bragg', 'CA'),
+    ("O'fallon", "O'fallon", 'MO'),
+    ('Odell', 'Fort Collins', 'CO'),
+    ('Old Bakery', 'Alton', 'IL'),
+    ('Old Irving', 'Chicago', 'IL'),
+    ('Old Nation', 'Williamston', 'MI'),
+    ('Ommegang', 'Cooperstown', 'NY'),
+    ('Oskar Blues', 'Brevard', 'NC'),
+    ('Paulaner', 'Munich', 'Germany'),
+    ('Penrose', 'Geneva', 'IL'),
+    ('Perennial', 'St. Louis', 'MO'),
+    ('Prairie', 'Oklahoma City', 'OK'),
+    ('Port', 'San Marcos', 'CA'),
+    ('Revolution', 'Chicago', 'IL'),
+    ('Rhinegeist', 'Cincinatti', 'OH'),
+    ('Rogue', 'Astoria', 'OR'),
+    ('Stubborn German', 'Waterloo', 'IL'),
+    ('Sun King', 'Indianapolis', 'IN'),
+    ('Schlafly', 'St. Louis', 'MO'),
+    ('SweetWater', 'Atlanta', 'GA'),
+    ('Sierra Nevada', 'Mills River', 'NC'),
+    ('Sixpoint', 'Brooklyn', 'NY'),
+    ('Ska', 'Durango', 'CO'),
+    ('Southern Tier', 'Lakewood', 'NY'),
+    ('Spaten', "Munchen", 'Germany'),
+    ('Stone', 'Escondido', 'CA'),
+    ('Surly', 'Minneapolis', 'MN'),
+    ('Toppling Goliath', 'Decorah', 'IA'),
+    ('Triptych', 'Savoy', 'IL'),
+    ('Urban Chestnut', 'St. Louis', 'MO'),
+    ('Upland', 'Bloomington', 'IN'),
+    ('Veltins', 'Grevenstein', 'Germany'),
+    ('Wake', 'Rock Island', 'IL'),
+    ('Warpigs', 'Munster', 'IN'),
+    ('Virtue', 'Fennville', 'MI'),
+    ('White Rooster', 'Sparta', 'IL'),
+    ('Wells', 'Belford', 'England'),
+    ('Westmalle', 'Westmalle', 'Belgium'),
     ('2nd Shift', 'St. Louis', 'MO');
-    
+
 
 
 
