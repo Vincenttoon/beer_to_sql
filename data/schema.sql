@@ -23,18 +23,9 @@ CREATE TABLE breweries (
   brewery_state VARCHAR(50)
 );
 
--- Locations
-CREATE TABLE locations (
-  location_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  location_name VARCHAR(255) NOT NULL,
-  location_city VARCHAR(255),
-  location_state VARCHAR(50)
-);
-
 -- Table Alterations
 ALTER TABLE styles ADD INDEX (style_name);
 ALTER TABLE breweries ADD INDEX (brewery_name);
-ALTER TABLE locations ADD INDEX (location_name);
 
 -- Ratings
 CREATE TABLE ratings (
@@ -51,10 +42,8 @@ CREATE TABLE beers (
   abv DECIMAL(10,2) NOT NULL,
   rating_id INT NOT NULL,
   date_drunk DATE NOT NULL,
-  location_name VARCHAR(255),
   notes TEXT,
   FOREIGN KEY (style_name) REFERENCES styles(style_name),
   FOREIGN KEY (rating_id) REFERENCES ratings(rating_id),
-  FOREIGN KEY (location_name) REFERENCES locations(location_name),
   FOREIGN KEY (brewery_name) REFERENCES breweries(brewery_name)
 );

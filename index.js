@@ -120,11 +120,6 @@ const addBeer = async () => {
       },
       {
         type: "input",
-        name: "location_name",
-        message: "Enter the location name:",
-      },
-      {
-        type: "input",
         name: "notes",
         message: "Enter notes:",
       },
@@ -137,7 +132,6 @@ const addBeer = async () => {
         abv,
         rating_id,
         date_drunk,
-        location_name,
         notes,
       } = answers;
 
@@ -154,7 +148,6 @@ const addBeer = async () => {
                 abv,
                 rating_id,
                 date_drunk,
-                location_name,
                 notes
               )
               .then(() => {
@@ -204,7 +197,6 @@ const addBeer = async () => {
                             abv,
                             rating_id,
                             date_drunk,
-                            location_name,
                             notes
                           );
                         })
@@ -227,7 +219,6 @@ const addBeer = async () => {
                       abv,
                       rating_id,
                       date_drunk,
-                      location_name,
                       notes
                     )
                     .then(() => {
@@ -269,16 +260,15 @@ const viewBeerByName = async () => {
       console.log("Beer Details:");
       console.log("--------------------");
 
-      // Create a new array of objects with formatted date_drunk and without the "id" and "location_name" properties
+      // Create a new array of objects with formatted date_drunk and without the "id" and properties
       const formattedBeers = beers.map((beer) => {
         const {
           id,
-          location_name,
           date_drunk,
-          ...beerWithoutIdLocationAndDate
+          ...beerWithoutIdAndDate
         } = beer;
         const formattedDate = new Date(date_drunk).toLocaleDateString("en-US");
-        return { ...beerWithoutIdLocationAndDate, date_drunk: formattedDate };
+        return { ...beerWithoutIdAndDate, date_drunk: formattedDate };
       });
 
       console.table(formattedBeers); // Display the formatted array
@@ -308,18 +298,17 @@ const viewBeersByBrewery = async () => {
       console.log("Beers by:", brewery_name);
       console.log("--------------------");
 
-      // Create a new array of objects with formatted date_drunk and without the "id", "location_name", and "brewery_name" properties
+      // Create a new array of objects with formatted date_drunk and without the "id", and "brewery_name" properties
       const formattedBeers = beers.map((beer) => {
         const {
           id,
-          location_name,
           brewery_name,
           date_drunk,
-          ...beerWithoutIdLocationBreweryAndDate
+          ...beerWithoutIdBreweryAndDate
         } = beer;
         const formattedDate = new Date(date_drunk).toLocaleDateString("en-US");
         return {
-          ...beerWithoutIdLocationBreweryAndDate,
+          ...beerWithoutIdBreweryAndDate,
           date_drunk: formattedDate,
         };
       });
@@ -412,18 +401,17 @@ const viewBeersByStyle = async () => {
       console.log("Beers by Style:", style);
       console.log("--------------------");
 
-      // Create a new array of objects with formatted date_drunk and without the "id", "style_name", and "location_name" properties
+      // Create a new array of objects with formatted date_drunk and without the "id", "style_name", and properties
       const formattedBeers = beers.map((beer) => {
         const {
           id,
           style_name,
-          location_name,
-          ...beerWithoutIdStyleAndLocation
+          ...beerWithoutIdAndStyle
         } = beer;
         const formattedDate = new Date(beer.date_drunk).toLocaleDateString(
           "en-US"
         );
-        return { ...beerWithoutIdStyleAndLocation, date_drunk: formattedDate };
+        return { ...beerWithoutIdAndStyle, date_drunk: formattedDate };
       });
 
       console.table(formattedBeers); // Display the formatted array

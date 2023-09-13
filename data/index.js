@@ -70,13 +70,12 @@ class DB {
 
   seeAllBeers() {
     return this.connection.promise().query(
-      `SELECT b.name AS beer_name, br.brewery_name, s.style_name, b.abv, r.value AS rating_value, DATE_FORMAT(b.date_drunk, '%a %b %d %Y') AS date_drunk, l.location_name, b.notes 
+      `SELECT b.name AS beer_name, br.brewery_name, s.style_name, b.abv, r.value AS rating_value, DATE_FORMAT(b.date_drunk, '%a %b %d %Y') AS date_drunk, b.notes 
       FROM beers b 
       JOIN ratings r ON b.rating_id = r.rating_id 
       JOIN breweries br ON b.brewery_name = br.brewery_name -- Use the correct alias and column name
       JOIN styles s ON b.style_name = s.style_name -- Similarly, use the correct alias and column name
-      LEFT JOIN locations l ON b.location_name = l.location_name
-      ORDER BY br.brewery_name, b.name, s.style_name, b.abv, r.value, b.date_drunk, l.location_name, b.notes;      
+      ORDER BY br.brewery_name, b.name, s.style_name, b.abv, r.value, b.date_drunk, b.notes;      
       `
     );
   }
@@ -117,7 +116,7 @@ class DB {
     return this.connection
       .promise()
       .query(
-        "SELECT ratings.value AS rating_value, beers.name AS beer_name, breweries.name AS brewery_name, styles.name AS style_name, beers.abv, locations.name AS location_name, beers.notes FROM beers JOIN breweries ON beers.brewery_id = breweries.brewery_id JOIN styles ON beers.style_id = styles.style_id JOIN ratings ON beers.rating_id = ratings.rating_id LEFT JOIN locations ON beers.location_id = locations.location_id ORDER BY rating_value DESC, beer_name, brewery_name, style_name, abv, location_name, notes"
+        "SELECT ratings.value AS rating_value, beers.name AS beer_name, breweries.name AS brewery_name, styles.name AS style_name, beers.abv, notes"
       );
   }
 
@@ -127,12 +126,11 @@ class DB {
     return connection
       .promise()
       .query(
-        `SELECT beers.id, beers.name, b.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
+        `SELECT beers.id, beers.name, b.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, beers.notes 
         FROM beers 
         JOIN breweries AS b ON beers.brewery_name = b.brewery_name 
         JOIN styles ON beers.style_name = styles.style_name 
         JOIN ratings ON beers.rating_id = ratings.rating_id 
-        LEFT JOIN locations ON beers.location_name = locations.location_name 
         WHERE b.brewery_name = ? 
         ORDER BY beers.name ASC;`,
         [breweryName]
@@ -149,12 +147,11 @@ class DB {
 
   seeBeersByStyle = (style) => {
     return this.connection.promise().query(
-      `SELECT beers.id, beers.name, b.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
+      `SELECT beers.id, beers.name, b.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, beers.notes 
        FROM beers 
        JOIN breweries AS b ON beers.brewery_name = b.brewery_name 
        JOIN styles ON beers.style_name = styles.style_name 
        JOIN ratings ON beers.rating_id = ratings.rating_id 
-       LEFT JOIN locations ON beers.location_name = locations.location_name 
        WHERE styles.style_name = ? 
        ORDER BY b.brewery_name ASC, beers.name ASC;`, // Order by brewery_name first, then by beer name
       [style]
@@ -165,12 +162,11 @@ class DB {
 
   seeBeersBySingleRating(rating) {
     return this.connection.promise().query(
-      `SELECT beers.id, beers.name, breweries.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
+      `SELECT beers.id, beers.name, breweries.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, beers.notes 
       FROM beers 
       JOIN ratings ON beers.rating_id = ratings.rating_id 
       JOIN breweries ON beers.brewery_name = breweries.brewery_name 
       JOIN styles ON beers.style_name = styles.style_name 
-      LEFT JOIN locations ON beers.location_name = locations.location_name 
       WHERE ratings.value = ?
       ORDER BY breweries.brewery_name ASC, beers.name ASC;`, // Order by brewery_name first, then by beer name
       [rating]
@@ -234,12 +230,11 @@ class DB {
 
   findBeerByName(name) {
     return this.connection.promise().query(
-      `SELECT beers.id, beers.name, breweries.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, locations.location_name, beers.notes 
+      `SELECT beers.id, beers.name, breweries.brewery_name, styles.style_name, beers.abv, ratings.value AS rating, beers.date_drunk, beers.notes 
       FROM beers 
       JOIN ratings ON beers.rating_id = ratings.rating_id 
       JOIN breweries ON beers.brewery_name = breweries.brewery_name 
       JOIN styles ON beers.style_name = styles.style_name 
-      LEFT JOIN locations ON beers.location_name = locations.location_name 
       WHERE beers.name = ?;`,
       [name]
     );
@@ -290,7 +285,6 @@ class DB {
     abv,
     rating_id,
     date_drunk,
-    location_name,
     notes
   ) {
     try {
@@ -299,8 +293,8 @@ class DB {
       if (brewery) {
         // Brewery exists, add the beer with the existing brewery_id
         const insertQuery = `
-          INSERT INTO beers (name, brewery_name, style_name, abv, rating_id, date_drunk, location_name, notes)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          INSERT INTO beers (name, brewery_name, style_name, abv, rating_id, date_drunk, notes)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
         const insertValues = [
           name,
@@ -309,7 +303,6 @@ class DB {
           abv,
           rating_id,
           date_drunk,
-          location_name,
           notes,
         ];
 
