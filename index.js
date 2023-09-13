@@ -262,11 +262,7 @@ const viewBeerByName = async () => {
 
       // Create a new array of objects with formatted date_drunk and without the "id" and properties
       const formattedBeers = beers.map((beer) => {
-        const {
-          id,
-          date_drunk,
-          ...beerWithoutIdAndDate
-        } = beer;
+        const { id, date_drunk, ...beerWithoutIdAndDate } = beer;
         const formattedDate = new Date(date_drunk).toLocaleDateString("en-US");
         return { ...beerWithoutIdAndDate, date_drunk: formattedDate };
       });
@@ -300,12 +296,8 @@ const viewBeersByBrewery = async () => {
 
       // Create a new array of objects with formatted date_drunk and without the "id", and "brewery_name" properties
       const formattedBeers = beers.map((beer) => {
-        const {
-          id,
-          brewery_name,
-          date_drunk,
-          ...beerWithoutIdBreweryAndDate
-        } = beer;
+        const { id, brewery_name, date_drunk, ...beerWithoutIdBreweryAndDate } =
+          beer;
         const formattedDate = new Date(date_drunk).toLocaleDateString("en-US");
         return {
           ...beerWithoutIdBreweryAndDate,
@@ -403,11 +395,7 @@ const viewBeersByStyle = async () => {
 
       // Create a new array of objects with formatted date_drunk and without the "id", "style_name", and properties
       const formattedBeers = beers.map((beer) => {
-        const {
-          id,
-          style_name,
-          ...beerWithoutIdAndStyle
-        } = beer;
+        const { id, style_name, ...beerWithoutIdAndStyle } = beer;
         const formattedDate = new Date(beer.date_drunk).toLocaleDateString(
           "en-US"
         );
