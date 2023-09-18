@@ -1,5 +1,7 @@
 # Beer to SQL
 
+![Picture of beers in database](./assets/view-beers.jpg)
+
 ## License
 ### [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ### [MIT](https://opensource.org/licenses/MIT)
@@ -7,6 +9,8 @@
 ## Description
 
 Back end database using SQL, Javascript and Inquirer to track all the beers a user has drank, complete with rating, style, brewery and date drunk. Inspired by Untappd, but build by hand for fun to strengthen back-end portfolio.
+
+![Picture of breweries in database](./assets/view-all-brew.jpg)
 
 By: [Vincent Toon](https://github.com/Vincenttoon)
 
@@ -57,6 +61,8 @@ By: [Vincent Toon](https://github.com/Vincenttoon)
 ## Usage
 
 - Users can view, create, edit and delete a variety of options relating to their beer portfolio. Beers, breweries, styles all can be added, edited and deleted, and you can view these different characteristics a variety of ways.
+
+![Prompt list from inquirer](./assets/inquirer-function.jpg)
 
 ## Future Improvements
 
